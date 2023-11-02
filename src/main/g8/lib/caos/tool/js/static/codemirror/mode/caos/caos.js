@@ -27,7 +27,7 @@ CodeMirror.defineMode("caos", function(_config, modeConfig) {
   var hexitRE = /[0-9A-Fa-f]/;
   var octitRE = /[0-7]/;
   var idRE = /[a-z_A-Z0-9'\xa1-\uffff]/;
-  var symbolRE = /[-!#$%&*+.\/<=>?@\\^|~:]/;
+  var symbolRE = /[-!#\$%&*+.\/<=>?@\\^|~:]/;
   var specialRE = /[(),;[\]`{}]/;
   var whiteCharRE = /[ \t\v\f]/; // newlines are handled in tokenizer
 

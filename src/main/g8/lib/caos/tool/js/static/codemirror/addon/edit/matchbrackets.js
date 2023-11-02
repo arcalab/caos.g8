@@ -20,7 +20,7 @@
     var line = cm.getLineHandle(where.line), pos = where.ch - 1;
     var afterCursor = config && config.afterCursor
     if (afterCursor == null)
-      afterCursor = /(^| )cm-fat-cursor($| )/.test(cm.getWrapperElement().className)
+      afterCursor = /(^| )cm-fat-cursor(\$| )/.test(cm.getWrapperElement().className)
 
     // A cursor is defined as between two characters, but in in vim command mode
     // (i.e. not insert mode), the cursor is visually represented as a
