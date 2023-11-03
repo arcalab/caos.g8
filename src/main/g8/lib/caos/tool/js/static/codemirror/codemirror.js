@@ -47,7 +47,7 @@ if (presto_version && presto_version >= 15) { presto = false; webkit = true; }
 var flipCtrlCmd = mac && (qtwebkit || presto && (presto_version == null || presto_version < 12.11));
 var captureRightClick = gecko || (ie && ie_version >= 9);
 
-function classTest(cls) { return new RegExp("(^|\\s)" + cls + "(?:\$|\\s)\\s*") }
+function classTest(cls) { return new RegExp("(^|\\s)" + cls + "(?:$|\\s)\\s*") }
 
 var rmClass = function(node, cls) {
   var current = node.className;
@@ -458,8 +458,8 @@ function lineNo(line) {
 function lineAtHeight(chunk, h) {
   var n = chunk.first;
   outer: do {
-    for (var i\$1 = 0; i\$1 < chunk.children.length; ++i\$1) {
-      var child = chunk.children[i\$1], ch = child.height;
+    for (var i$1 = 0; i$1 < chunk.children.length; ++i$1) {
+      var child = chunk.children[i$1], ch = child.height;
       if (h < ch) { chunk = child; continue outer }
       h -= ch;
       n += child.chunkSize();
@@ -622,18 +622,18 @@ function stretchSpansOverChange(doc, change) {
   }
   if (last) {
     // Fix up .from in last (or move them into first in case of sameLine)
-    for (var i\$1 = 0; i\$1 < last.length; ++i\$1) {
-      var span\$1 = last[i\$1];
-      if (span\$1.to != null) { span\$1.to += offset; }
-      if (span\$1.from == null) {
-        var found\$1 = getMarkedSpanFor(first, span\$1.marker);
-        if (!found\$1) {
-          span\$1.from = offset;
-          if (sameLine) { (first || (first = [])).push(span\$1); }
+    for (var i$1 = 0; i$1 < last.length; ++i$1) {
+      var span$1 = last[i$1];
+      if (span$1.to != null) { span$1.to += offset; }
+      if (span$1.from == null) {
+        var found$1 = getMarkedSpanFor(first, span$1.marker);
+        if (!found$1) {
+          span$1.from = offset;
+          if (sameLine) { (first || (first = [])).push(span$1); }
         }
       } else {
-        span\$1.from += offset;
-        if (sameLine) { (first || (first = [])).push(span\$1); }
+        span$1.from += offset;
+        if (sameLine) { (first || (first = [])).push(span$1); }
       }
     }
   }
@@ -646,10 +646,10 @@ function stretchSpansOverChange(doc, change) {
     // Fill gap with whole-line-spans
     var gap = change.text.length - 2, gapMarkers;
     if (gap > 0 && first)
-      { for (var i\$2 = 0; i\$2 < first.length; ++i\$2)
-        { if (first[i\$2].to == null)
-          { (gapMarkers || (gapMarkers = [])).push(new MarkedSpan(first[i\$2].marker, null, null)); } } }
-    for (var i\$3 = 0; i\$3 < gap; ++i\$3)
+      { for (var i$2 = 0; i$2 < first.length; ++i$2)
+        { if (first[i$2].to == null)
+          { (gapMarkers || (gapMarkers = [])).push(new MarkedSpan(first[i$2].marker, null, null)); } } }
+    for (var i$3 = 0; i$3 < gap; ++i$3)
       { newMarkers.push(gapMarkers); }
     newMarkers.push(last);
   }
@@ -759,8 +759,8 @@ function collapsedSpanAround(line, ch) {
 // Test whether there exists a collapsed span that partially
 // overlaps (covers the start or end, but not both) of a new span.
 // Such overlap is not allowed.
-function conflictingCollapsedRange(doc, lineNo\$\$1, from, to, marker) {
-  var line = getLine(doc, lineNo\$\$1);
+function conflictingCollapsedRange(doc, lineNo$$1, from, to, marker) {
+  var line = getLine(doc, lineNo$$1);
   var sps = sawCollapsedSpans && line.markedSpans;
   if (sps) { for (var i = 0; i < sps.length; ++i) {
     var sp = sps[i];
@@ -864,8 +864,8 @@ function heightAtLine(lineObj) {
     else { h += line.height; }
   }
   for (var p = chunk.parent; p; chunk = p, p = chunk.parent) {
-    for (var i\$1 = 0; i\$1 < p.children.length; ++i\$1) {
-      var cur = p.children[i\$1];
+    for (var i$1 = 0; i$1 < p.children.length; ++i$1) {
+      var cur = p.children[i$1];
       if (cur == chunk) { break }
       else { h += cur.height; }
     }
@@ -886,10 +886,10 @@ function lineLength(line) {
   }
   cur = line;
   while (merged = collapsedSpanAtEnd(cur)) {
-    var found\$1 = merged.find(0, true);
-    len -= cur.text.length - found\$1.from.ch;
-    cur = found\$1.to.line;
-    len += cur.text.length - found\$1.to.ch;
+    var found$1 = merged.find(0, true);
+    len -= cur.text.length - found$1.from.ch;
+    cur = found$1.to.line;
+    len += cur.text.length - found$1.to.ch;
   }
   return len
 }
@@ -1001,9 +1001,9 @@ var bidiOrdering = (function() {
     // change the type of the NSM to the type of the previous
     // character. If the NSM is at the start of the level run, it will
     // get the type of sor.
-    for (var i\$1 = 0, prev = outerType; i\$1 < len; ++i\$1) {
-      var type = types[i\$1];
-      if (type == "m") { types[i\$1] = prev; }
+    for (var i$1 = 0, prev = outerType; i$1 < len; ++i$1) {
+      var type = types[i$1];
+      if (type == "m") { types[i$1] = prev; }
       else { prev = type; }
     }
 
@@ -1012,46 +1012,46 @@ var bidiOrdering = (function() {
     // AL is found, change the type of the European number to Arabic
     // number.
     // W3. Change all ALs to R.
-    for (var i\$2 = 0, cur = outerType; i\$2 < len; ++i\$2) {
-      var type\$1 = types[i\$2];
-      if (type\$1 == "1" && cur == "r") { types[i\$2] = "n"; }
-      else if (isStrong.test(type\$1)) { cur = type\$1; if (type\$1 == "r") { types[i\$2] = "R"; } }
+    for (var i$2 = 0, cur = outerType; i$2 < len; ++i$2) {
+      var type$1 = types[i$2];
+      if (type$1 == "1" && cur == "r") { types[i$2] = "n"; }
+      else if (isStrong.test(type$1)) { cur = type$1; if (type$1 == "r") { types[i$2] = "R"; } }
     }
 
     // W4. A single European separator between two European numbers
     // changes to a European number. A single common separator between
     // two numbers of the same type changes to that type.
-    for (var i\$3 = 1, prev\$1 = types[0]; i\$3 < len - 1; ++i\$3) {
-      var type\$2 = types[i\$3];
-      if (type\$2 == "+" && prev\$1 == "1" && types[i\$3+1] == "1") { types[i\$3] = "1"; }
-      else if (type\$2 == "," && prev\$1 == types[i\$3+1] &&
-               (prev\$1 == "1" || prev\$1 == "n")) { types[i\$3] = prev\$1; }
-      prev\$1 = type\$2;
+    for (var i$3 = 1, prev$1 = types[0]; i$3 < len - 1; ++i$3) {
+      var type$2 = types[i$3];
+      if (type$2 == "+" && prev$1 == "1" && types[i$3+1] == "1") { types[i$3] = "1"; }
+      else if (type$2 == "," && prev$1 == types[i$3+1] &&
+               (prev$1 == "1" || prev$1 == "n")) { types[i$3] = prev$1; }
+      prev$1 = type$2;
     }
 
     // W5. A sequence of European terminators adjacent to European
     // numbers changes to all European numbers.
     // W6. Otherwise, separators and terminators change to Other
     // Neutral.
-    for (var i\$4 = 0; i\$4 < len; ++i\$4) {
-      var type\$3 = types[i\$4];
-      if (type\$3 == ",") { types[i\$4] = "N"; }
-      else if (type\$3 == "%") {
+    for (var i$4 = 0; i$4 < len; ++i$4) {
+      var type$3 = types[i$4];
+      if (type$3 == ",") { types[i$4] = "N"; }
+      else if (type$3 == "%") {
         var end = (void 0);
-        for (end = i\$4 + 1; end < len && types[end] == "%"; ++end) {}
-        var replace = (i\$4 && types[i\$4-1] == "!") || (end < len && types[end] == "1") ? "1" : "N";
-        for (var j = i\$4; j < end; ++j) { types[j] = replace; }
-        i\$4 = end - 1;
+        for (end = i$4 + 1; end < len && types[end] == "%"; ++end) {}
+        var replace = (i$4 && types[i$4-1] == "!") || (end < len && types[end] == "1") ? "1" : "N";
+        for (var j = i$4; j < end; ++j) { types[j] = replace; }
+        i$4 = end - 1;
       }
     }
 
     // W7. Search backwards from each instance of a European number
     // until the first strong type (R, L, or sor) is found. If an L is
     // found, then change the type of the European number to L.
-    for (var i\$5 = 0, cur\$1 = outerType; i\$5 < len; ++i\$5) {
-      var type\$4 = types[i\$5];
-      if (cur\$1 == "L" && type\$4 == "1") { types[i\$5] = "L"; }
-      else if (isStrong.test(type\$4)) { cur\$1 = type\$4; }
+    for (var i$5 = 0, cur$1 = outerType; i$5 < len; ++i$5) {
+      var type$4 = types[i$5];
+      if (cur$1 == "L" && type$4 == "1") { types[i$5] = "L"; }
+      else if (isStrong.test(type$4)) { cur$1 = type$4; }
     }
 
     // N1. A sequence of neutrals takes the direction of the
@@ -1060,15 +1060,15 @@ var bidiOrdering = (function() {
     // terms of their influence on neutrals. Start-of-level-run (sor)
     // and end-of-level-run (eor) are used at level run boundaries.
     // N2. Any remaining neutrals take the embedding direction.
-    for (var i\$6 = 0; i\$6 < len; ++i\$6) {
-      if (isNeutral.test(types[i\$6])) {
-        var end\$1 = (void 0);
-        for (end\$1 = i\$6 + 1; end\$1 < len && isNeutral.test(types[end\$1]); ++end\$1) {}
-        var before = (i\$6 ? types[i\$6-1] : outerType) == "L";
-        var after = (end\$1 < len ? types[end\$1] : outerType) == "L";
-        var replace\$1 = before == after ? (before ? "L" : "R") : outerType;
-        for (var j\$1 = i\$6; j\$1 < end\$1; ++j\$1) { types[j\$1] = replace\$1; }
-        i\$6 = end\$1 - 1;
+    for (var i$6 = 0; i$6 < len; ++i$6) {
+      if (isNeutral.test(types[i$6])) {
+        var end$1 = (void 0);
+        for (end$1 = i$6 + 1; end$1 < len && isNeutral.test(types[end$1]); ++end$1) {}
+        var before = (i$6 ? types[i$6-1] : outerType) == "L";
+        var after = (end$1 < len ? types[end$1] : outerType) == "L";
+        var replace$1 = before == after ? (before ? "L" : "R") : outerType;
+        for (var j$1 = i$6; j$1 < end$1; ++j$1) { types[j$1] = replace$1; }
+        i$6 = end$1 - 1;
       }
     }
 
@@ -1078,24 +1078,24 @@ var bidiOrdering = (function() {
     // explicit embedding into account, we can build up the order on
     // the fly, without following the level-based algorithm.
     var order = [], m;
-    for (var i\$7 = 0; i\$7 < len;) {
-      if (countsAsLeft.test(types[i\$7])) {
-        var start = i\$7;
-        for (++i\$7; i\$7 < len && countsAsLeft.test(types[i\$7]); ++i\$7) {}
-        order.push(new BidiSpan(0, start, i\$7));
+    for (var i$7 = 0; i$7 < len;) {
+      if (countsAsLeft.test(types[i$7])) {
+        var start = i$7;
+        for (++i$7; i$7 < len && countsAsLeft.test(types[i$7]); ++i$7) {}
+        order.push(new BidiSpan(0, start, i$7));
       } else {
-        var pos = i\$7, at = order.length;
-        for (++i\$7; i\$7 < len && types[i\$7] != "L"; ++i\$7) {}
-        for (var j\$2 = pos; j\$2 < i\$7;) {
-          if (countsAsNum.test(types[j\$2])) {
-            if (pos < j\$2) { order.splice(at, 0, new BidiSpan(1, pos, j\$2)); }
-            var nstart = j\$2;
-            for (++j\$2; j\$2 < i\$7 && countsAsNum.test(types[j\$2]); ++j\$2) {}
-            order.splice(at, 0, new BidiSpan(2, nstart, j\$2));
-            pos = j\$2;
-          } else { ++j\$2; }
+        var pos = i$7, at = order.length;
+        for (++i$7; i$7 < len && types[i$7] != "L"; ++i$7) {}
+        for (var j$2 = pos; j$2 < i$7;) {
+          if (countsAsNum.test(types[j$2])) {
+            if (pos < j$2) { order.splice(at, 0, new BidiSpan(1, pos, j$2)); }
+            var nstart = j$2;
+            for (++j$2; j$2 < i$7 && countsAsNum.test(types[j$2]); ++j$2) {}
+            order.splice(at, 0, new BidiSpan(2, nstart, j$2));
+            pos = j$2;
+          } else { ++j$2; }
         }
-        if (pos < i\$7) { order.splice(at, 0, new BidiSpan(1, pos, i\$7)); }
+        if (pos < i$7) { order.splice(at, 0, new BidiSpan(1, pos, i$7)); }
       }
     }
     if (direction == "ltr") {
@@ -1103,7 +1103,7 @@ var bidiOrdering = (function() {
         order[0].from = m[0].length;
         order.unshift(new BidiSpan(0, 0, m[0].length));
       }
-      if (lst(order).level == 1 && (m = str.match(/\s+\$/))) {
+      if (lst(order).level == 1 && (m = str.match(/\s+$/))) {
         lst(order).to -= m[0].length;
         order.push(new BidiSpan(0, len - m[0].length, len));
       }
@@ -1135,8 +1135,8 @@ var on = function(emitter, type, f) {
   } else if (emitter.attachEvent) {
     emitter.attachEvent("on" + type, f);
   } else {
-    var map\$\$1 = emitter._handlers || (emitter._handlers = {});
-    map\$\$1[type] = (map\$\$1[type] || noHandlers).concat(f);
+    var map$$1 = emitter._handlers || (emitter._handlers = {});
+    map$$1[type] = (map$$1[type] || noHandlers).concat(f);
   }
 };
 
@@ -1150,11 +1150,11 @@ function off(emitter, type, f) {
   } else if (emitter.detachEvent) {
     emitter.detachEvent("on" + type, f);
   } else {
-    var map\$\$1 = emitter._handlers, arr = map\$\$1 && map\$\$1[type];
+    var map$$1 = emitter._handlers, arr = map$$1 && map$$1[type];
     if (arr) {
       var index = indexOf(arr, f);
       if (index > -1)
-        { map\$\$1[type] = arr.slice(0, index).concat(arr.slice(index + 1)); }
+        { map$$1[type] = arr.slice(0, index).concat(arr.slice(index + 1)); }
     }
   }
 }
@@ -1282,11 +1282,11 @@ var hasSelection = window.getSelection ? function (te) {
   try { return te.selectionStart != te.selectionEnd }
   catch(e) { return false }
 } : function (te) {
-  var range\$\$1;
-  try {range\$\$1 = te.ownerDocument.selection.createRange();}
+  var range$$1;
+  try {range$$1 = te.ownerDocument.selection.createRange();}
   catch(e) {}
-  if (!range\$\$1 || range\$\$1.parentElement() != te) { return false }
-  return range\$\$1.compareEndPoints("StartToEnd", range\$\$1) != 0
+  if (!range$$1 || range$$1.parentElement() != te) { return false }
+  return range$$1.compareEndPoints("StartToEnd", range$$1) != 0
 };
 
 var hasCopyEvent = (function () {
@@ -1332,9 +1332,9 @@ function resolveMode(spec) {
     if (typeof found == "string") { found = {name: found}; }
     spec = createObj(found, spec);
     spec.name = found.name;
-  } else if (typeof spec == "string" && /^[\w\-]+\/[\w\-]+\+xml\$/.test(spec)) {
+  } else if (typeof spec == "string" && /^[\w\-]+\/[\w\-]+\+xml$/.test(spec)) {
     return resolveMode("application/xml")
-  } else if (typeof spec == "string" && /^[\w\-]+\/[\w\-]+\+json\$/.test(spec)) {
+  } else if (typeof spec == "string" && /^[\w\-]+\/[\w\-]+\+json$/.test(spec)) {
     return resolveMode("application/json")
   }
   if (typeof spec == "string") { return {name: spec} }
@@ -1358,8 +1358,8 @@ function getMode(options, spec) {
   }
   modeObj.name = spec.name;
   if (spec.helperType) { modeObj.helperType = spec.helperType; }
-  if (spec.modeProps) { for (var prop\$1 in spec.modeProps)
-    { modeObj[prop\$1] = spec.modeProps[prop\$1]; } }
+  if (spec.modeProps) { for (var prop$1 in spec.modeProps)
+    { modeObj[prop$1] = spec.modeProps[prop$1]; } }
 
   return modeObj
 }
@@ -1435,10 +1435,10 @@ StringStream.prototype.eatWhile = function (match) {
   return this.pos > start
 };
 StringStream.prototype.eatSpace = function () {
-    var this\$1 = this;
+    var this$1 = this;
 
   var start = this.pos;
-  while (/[\s\u00a0]/.test(this.string.charAt(this.pos))) { ++this\$1.pos; }
+  while (/[\s\u00a0]/.test(this.string.charAt(this.pos))) { ++this$1.pos; }
   return this.pos > start
 };
 StringStream.prototype.skipToEnd = function () {this.pos = this.string.length;};
@@ -1509,11 +1509,11 @@ Context.prototype.lookAhead = function (n) {
 };
 
 Context.prototype.baseToken = function (n) {
-    var this\$1 = this;
+    var this$1 = this;
 
   if (!this.baseTokens) { return null }
   while (this.baseTokens[this.baseTokenPos] <= n)
-    { this\$1.baseTokenPos += 2; }
+    { this$1.baseTokenPos += 2; }
   var type = this.baseTokens[this.baseTokenPos + 1];
   return {type: type && type.replace(/( |^)overlay .*/, ""),
           size: this.baseTokens[this.baseTokenPos] - n}
@@ -1679,7 +1679,7 @@ function extractLineClasses(type, output) {
     var prop = lineClass[1] ? "bgClass" : "textClass";
     if (output[prop] == null)
       { output[prop] = lineClass[2]; }
-    else if (!(new RegExp("(?:^|\s)" + lineClass[2] + "(?:\$|\s)")).test(output[prop]))
+    else if (!(new RegExp("(?:^|\s)" + lineClass[2] + "(?:$|\s)")).test(output[prop]))
       { output[prop] += " " + lineClass[2]; }
   } }
   return type
@@ -1803,10 +1803,10 @@ function cleanUpLine(line) {
 var styleToClassCache = {};
 var styleToClassCacheWithMode = {};
 function interpretTokenStyle(style, options) {
-  if (!style || /^\s*\$/.test(style)) { return null }
+  if (!style || /^\s*$/.test(style)) { return null }
   var cache = options.addModeClass ? styleToClassCacheWithMode : styleToClassCache;
   return cache[style] ||
-    (cache[style] = style.replace(/\S+/g, "cm-\$&"))
+    (cache[style] = style.replace(/\S+/g, "cm-$&"))
 }
 
 // Render the DOM representation of the text of a line. Also builds
@@ -1909,25 +1909,25 @@ function buildToken(builder, text, style, startStyle, endStyle, title, css) {
       }
       if (!m) { break }
       pos += skipped + 1;
-      var txt\$1 = (void 0);
+      var txt$1 = (void 0);
       if (m[0] == "\t") {
         var tabSize = builder.cm.options.tabSize, tabWidth = tabSize - builder.col % tabSize;
-        txt\$1 = content.appendChild(elt("span", spaceStr(tabWidth), "cm-tab"));
-        txt\$1.setAttribute("role", "presentation");
-        txt\$1.setAttribute("cm-text", "\t");
+        txt$1 = content.appendChild(elt("span", spaceStr(tabWidth), "cm-tab"));
+        txt$1.setAttribute("role", "presentation");
+        txt$1.setAttribute("cm-text", "\t");
         builder.col += tabWidth;
       } else if (m[0] == "\r" || m[0] == "\n") {
-        txt\$1 = content.appendChild(elt("span", m[0] == "\r" ? "\u240d" : "\u2424", "cm-invalidchar"));
-        txt\$1.setAttribute("cm-text", m[0]);
+        txt$1 = content.appendChild(elt("span", m[0] == "\r" ? "\u240d" : "\u2424", "cm-invalidchar"));
+        txt$1.setAttribute("cm-text", m[0]);
         builder.col += 1;
       } else {
-        txt\$1 = builder.cm.options.specialCharPlaceholder(m[0]);
-        txt\$1.setAttribute("cm-text", m[0]);
-        if (ie && ie_version < 9) { content.appendChild(elt("span", [txt\$1])); }
-        else { content.appendChild(txt\$1); }
+        txt$1 = builder.cm.options.specialCharPlaceholder(m[0]);
+        txt$1.setAttribute("cm-text", m[0]);
+        if (ie && ie_version < 9) { content.appendChild(elt("span", [txt$1])); }
+        else { content.appendChild(txt$1); }
         builder.col += 1;
       }
-      builder.map.push(builder.pos, builder.pos + 1, txt\$1);
+      builder.map.push(builder.pos, builder.pos + 1, txt$1);
       builder.pos++;
     }
   }
@@ -1999,8 +1999,8 @@ function buildCollapsedSpan(builder, size, marker, ignoreWidget) {
 function insertLineContent(line, builder, styles) {
   var spans = line.markedSpans, allText = line.text, at = 0;
   if (!spans) {
-    for (var i\$1 = 1; i\$1 < styles.length; i\$1+=2)
-      { builder.addToken(builder, allText.slice(at, at = styles[i\$1]), interpretTokenStyle(styles[i\$1+1], builder.cm.options)); }
+    for (var i$1 = 1; i$1 < styles.length; i$1+=2)
+      { builder.addToken(builder, allText.slice(at, at = styles[i$1]), interpretTokenStyle(styles[i$1+1], builder.cm.options)); }
     return
   }
 
@@ -2031,11 +2031,11 @@ function insertLineContent(line, builder, styles) {
           nextChange = sp.from;
         }
       }
-      if (endStyles) { for (var j\$1 = 0; j\$1 < endStyles.length; j\$1 += 2)
-        { if (endStyles[j\$1 + 1] == nextChange) { spanEndStyle += " " + endStyles[j\$1]; } } }
+      if (endStyles) { for (var j$1 = 0; j$1 < endStyles.length; j$1 += 2)
+        { if (endStyles[j$1 + 1] == nextChange) { spanEndStyle += " " + endStyles[j$1]; } } }
 
-      if (!collapsed || collapsed.from == pos) { for (var j\$2 = 0; j\$2 < foundBookmarks.length; ++j\$2)
-        { buildCollapsedSpan(builder, 0, foundBookmarks[j\$2]); } }
+      if (!collapsed || collapsed.from == pos) { for (var j$2 = 0; j$2 < foundBookmarks.length; ++j$2)
+        { buildCollapsedSpan(builder, 0, foundBookmarks[j$2]); } }
       if (collapsed && (collapsed.from || 0) == pos) {
         buildCollapsedSpan(builder, (collapsed.to == null ? len + 1 : collapsed.to) - pos,
                            collapsed.marker, collapsed.from == null);
@@ -2263,10 +2263,10 @@ function updateLineGutter(cm, lineView, lineN, dims) {
   }
   var markers = lineView.line.gutterMarkers;
   if (cm.options.lineNumbers || markers) {
-    var wrap\$1 = ensureLineWrapped(lineView);
+    var wrap$1 = ensureLineWrapped(lineView);
     var gutterWrap = lineView.gutter = elt("div", null, "CodeMirror-gutter-wrapper", ("left: " + (cm.options.fixedGutter ? dims.fixedPos : -dims.gutterTotalWidth) + "px"));
     cm.display.input.setUneditable(gutterWrap);
-    wrap\$1.insertBefore(gutterWrap, lineView.text);
+    wrap$1.insertBefore(gutterWrap, lineView.text);
     if (lineView.line.gutterClass)
       { gutterWrap.className += " " + lineView.line.gutterClass; }
     if (cm.options.lineNumbers && (!markers || !markers["CodeMirror-linenumbers"]))
@@ -2424,9 +2424,9 @@ function mapFromLineView(lineView, line, lineN) {
   for (var i = 0; i < lineView.rest.length; i++)
     { if (lineView.rest[i] == line)
       { return {map: lineView.measure.maps[i], cache: lineView.measure.caches[i]} } }
-  for (var i\$1 = 0; i\$1 < lineView.rest.length; i\$1++)
-    { if (lineNo(lineView.rest[i\$1]) > lineN)
-      { return {map: lineView.measure.maps[i\$1], cache: lineView.measure.caches[i\$1], before: true} } }
+  for (var i$1 = 0; i$1 < lineView.rest.length; i$1++)
+    { if (lineNo(lineView.rest[i$1]) > lineN)
+      { return {map: lineView.measure.maps[i$1], cache: lineView.measure.caches[i$1], before: true} } }
 }
 
 // Render a line into the hidden node display.externalMeasured. Used
@@ -2506,36 +2506,36 @@ function measureCharPrepared(cm, prepared, ch, bias, varHeight) {
 
 var nullRect = {left: 0, right: 0, top: 0, bottom: 0};
 
-function nodeAndOffsetInLineMap(map\$\$1, ch, bias) {
+function nodeAndOffsetInLineMap(map$$1, ch, bias) {
   var node, start, end, collapse, mStart, mEnd;
   // First, search the line map for the text node corresponding to,
   // or closest to, the target character.
-  for (var i = 0; i < map\$\$1.length; i += 3) {
-    mStart = map\$\$1[i];
-    mEnd = map\$\$1[i + 1];
+  for (var i = 0; i < map$$1.length; i += 3) {
+    mStart = map$$1[i];
+    mEnd = map$$1[i + 1];
     if (ch < mStart) {
       start = 0; end = 1;
       collapse = "left";
     } else if (ch < mEnd) {
       start = ch - mStart;
       end = start + 1;
-    } else if (i == map\$\$1.length - 3 || ch == mEnd && map\$\$1[i + 3] > ch) {
+    } else if (i == map$$1.length - 3 || ch == mEnd && map$$1[i + 3] > ch) {
       end = mEnd - mStart;
       start = end - 1;
       if (ch >= mEnd) { collapse = "right"; }
     }
     if (start != null) {
-      node = map\$\$1[i + 2];
+      node = map$$1[i + 2];
       if (mStart == mEnd && bias == (node.insertLeft ? "left" : "right"))
         { collapse = bias; }
       if (bias == "left" && start == 0)
-        { while (i && map\$\$1[i - 2] == map\$\$1[i - 3] && map\$\$1[i - 1].insertLeft) {
-          node = map\$\$1[(i -= 3) + 2];
+        { while (i && map$$1[i - 2] == map$$1[i - 3] && map$$1[i - 1].insertLeft) {
+          node = map$$1[(i -= 3) + 2];
           collapse = "left";
         } }
       if (bias == "right" && start == mEnd - mStart)
-        { while (i < map\$\$1.length - 3 && map\$\$1[i + 3] == map\$\$1[i + 4] && !map\$\$1[i + 5].insertLeft) {
-          node = map\$\$1[(i += 3) + 2];
+        { while (i < map$$1.length - 3 && map$$1[i + 3] == map$$1[i + 4] && !map$$1[i + 5].insertLeft) {
+          node = map$$1[(i += 3) + 2];
           collapse = "right";
         } }
       break
@@ -2548,8 +2548,8 @@ function getUsefulRect(rects, bias) {
   var rect = nullRect;
   if (bias == "left") { for (var i = 0; i < rects.length; i++) {
     if ((rect = rects[i]).left != rect.right) { break }
-  } } else { for (var i\$1 = rects.length - 1; i\$1 >= 0; i\$1--) {
-    if ((rect = rects[i\$1]).left != rect.right) { break }
+  } } else { for (var i$1 = rects.length - 1; i$1 >= 0; i$1--) {
+    if ((rect = rects[i$1]).left != rect.right) { break }
   } }
   return rect
 }
@@ -2560,7 +2560,7 @@ function measureCharInner(cm, prepared, ch, bias) {
 
   var rect;
   if (node.nodeType == 3) { // If it is a text node, use a range to retrieve the coordinates.
-    for (var i\$1 = 0; i\$1 < 4; i\$1++) { // Retry a maximum of 4 times when nonsense rectangles are returned
+    for (var i$1 = 0; i$1 < 4; i$1++) { // Retry a maximum of 4 times when nonsense rectangles are returned
       while (start && isExtendingChar(prepared.line.text.charAt(place.coverStart + start))) { --start; }
       while (place.coverStart + end < place.coverEnd && isExtendingChar(prepared.line.text.charAt(place.coverStart + end))) { ++end; }
       if (ie && ie_version < 9 && start == 0 && end == place.coverEnd - place.coverStart)
@@ -2818,13 +2818,13 @@ function boxIsAfter(box, x, y, left) {
   return box.bottom <= y ? false : box.top > y ? true : (left ? box.left : box.right) > x
 }
 
-function coordsCharInner(cm, lineObj, lineNo\$\$1, x, y) {
+function coordsCharInner(cm, lineObj, lineNo$$1, x, y) {
   // Move y into line-local coordinate space
   y -= heightAtLine(lineObj);
   var preparedMeasure = prepareMeasureForLine(cm, lineObj);
   // When directly calling `measureCharPrepared`, we have to adjust
   // for the widgets at this line.
-  var widgetHeight\$\$1 = widgetTopHeight(lineObj);
+  var widgetHeight$$1 = widgetTopHeight(lineObj);
   var begin = 0, end = lineObj.text.length, ltr = true;
 
   var order = getOrder(lineObj, cm.doc.direction);
@@ -2832,7 +2832,7 @@ function coordsCharInner(cm, lineObj, lineNo\$\$1, x, y) {
   // which bidi section the coordinates fall into.
   if (order) {
     var part = (cm.options.lineWrapping ? coordsBidiPartWrapped : coordsBidiPart)
-                 (cm, lineObj, lineNo\$\$1, preparedMeasure, order, x, y);
+                 (cm, lineObj, lineNo$$1, preparedMeasure, order, x, y);
     ltr = part.level != 1;
     // The awkward -1 offsets are needed because findFirst (called
     // on these below) will treat its first bound as inclusive,
@@ -2848,7 +2848,7 @@ function coordsCharInner(cm, lineObj, lineNo\$\$1, x, y) {
   var chAround = null, boxAround = null;
   var ch = findFirst(function (ch) {
     var box = measureCharPrepared(cm, preparedMeasure, ch);
-    box.top += widgetHeight\$\$1; box.bottom += widgetHeight\$\$1;
+    box.top += widgetHeight$$1; box.bottom += widgetHeight$$1;
     if (!boxIsAfter(box, x, y, false)) { return false }
     if (box.top <= y && box.left <= x) {
       chAround = ch;
@@ -2872,27 +2872,27 @@ function coordsCharInner(cm, lineObj, lineNo\$\$1, x, y) {
     // left of the character and compare it's vertical position to the
     // coordinates
     sticky = ch == 0 ? "after" : ch == lineObj.text.length ? "before" :
-      (measureCharPrepared(cm, preparedMeasure, ch - (ltr ? 1 : 0)).bottom + widgetHeight\$\$1 <= y) == ltr ?
+      (measureCharPrepared(cm, preparedMeasure, ch - (ltr ? 1 : 0)).bottom + widgetHeight$$1 <= y) == ltr ?
       "after" : "before";
     // Now get accurate coordinates for this place, in order to get a
     // base X position
-    var coords = cursorCoords(cm, Pos(lineNo\$\$1, ch, sticky), "line", lineObj, preparedMeasure);
+    var coords = cursorCoords(cm, Pos(lineNo$$1, ch, sticky), "line", lineObj, preparedMeasure);
     baseX = coords.left;
     outside = y < coords.top || y >= coords.bottom;
   }
 
   ch = skipExtendingChars(lineObj.text, ch, 1);
-  return PosWithInfo(lineNo\$\$1, ch, sticky, outside, x - baseX)
+  return PosWithInfo(lineNo$$1, ch, sticky, outside, x - baseX)
 }
 
-function coordsBidiPart(cm, lineObj, lineNo\$\$1, preparedMeasure, order, x, y) {
+function coordsBidiPart(cm, lineObj, lineNo$$1, preparedMeasure, order, x, y) {
   // Bidi parts are sorted left-to-right, and in a non-line-wrapping
   // situation, we can take this ordering to correspond to the visual
   // ordering. This finds the first part whose end is after the given
   // coordinates.
   var index = findFirst(function (i) {
     var part = order[i], ltr = part.level != 1;
-    return boxIsAfter(cursorCoords(cm, Pos(lineNo\$\$1, ltr ? part.to : part.from, ltr ? "before" : "after"),
+    return boxIsAfter(cursorCoords(cm, Pos(lineNo$$1, ltr ? part.to : part.from, ltr ? "before" : "after"),
                                    "line", lineObj, preparedMeasure), x, y, true)
   }, 0, order.length - 1);
   var part = order[index];
@@ -2901,7 +2901,7 @@ function coordsBidiPart(cm, lineObj, lineNo\$\$1, preparedMeasure, order, x, y) 
   // that start, move one part back.
   if (index > 0) {
     var ltr = part.level != 1;
-    var start = cursorCoords(cm, Pos(lineNo\$\$1, ltr ? part.from : part.to, ltr ? "after" : "before"),
+    var start = cursorCoords(cm, Pos(lineNo$$1, ltr ? part.from : part.to, ltr ? "after" : "before"),
                              "line", lineObj, preparedMeasure);
     if (boxIsAfter(start, x, y, true) && start.top > y)
       { part = order[index - 1]; }
@@ -3073,13 +3073,13 @@ function prepareSelection(cm, primary) {
 
   for (var i = 0; i < doc.sel.ranges.length; i++) {
     if (!primary && i == doc.sel.primIndex) { continue }
-    var range\$\$1 = doc.sel.ranges[i];
-    if (range\$\$1.from().line >= cm.display.viewTo || range\$\$1.to().line < cm.display.viewFrom) { continue }
-    var collapsed = range\$\$1.empty();
+    var range$$1 = doc.sel.ranges[i];
+    if (range$$1.from().line >= cm.display.viewTo || range$$1.to().line < cm.display.viewFrom) { continue }
+    var collapsed = range$$1.empty();
     if (collapsed || cm.options.showCursorWhenSelecting)
-      { drawSelectionCursor(cm, range\$\$1.head, curFragment); }
+      { drawSelectionCursor(cm, range$$1.head, curFragment); }
     if (!collapsed)
-      { drawSelectionRange(cm, range\$\$1, selFragment); }
+      { drawSelectionRange(cm, range$$1, selFragment); }
   }
   return result
 }
@@ -3106,7 +3106,7 @@ function drawSelectionCursor(cm, head, output) {
 function cmpCoords(a, b) { return a.top - b.top || a.left - b.left }
 
 // Draws the given range as a highlighted selection
-function drawSelectionRange(cm, range\$\$1, output) {
+function drawSelectionRange(cm, range$$1, output) {
   var display = cm.display, doc = cm.doc;
   var fragment = document.createDocumentFragment();
   var padding = paddingH(cm.display), leftSide = padding.left;
@@ -3175,7 +3175,7 @@ function drawSelectionRange(cm, range\$\$1, output) {
     return {start: start, end: end}
   }
 
-  var sFrom = range\$\$1.from(), sTo = range\$\$1.to();
+  var sFrom = range$$1.from(), sTo = range$$1.to();
   if (sFrom.line == sTo.line) {
     drawForLine(sFrom.line, sFrom.ch, sTo.ch);
   } else {
@@ -3473,9 +3473,9 @@ function scrollToCoords(cm, x, y) {
   if (y != null) { cm.curOp.scrollTop = y; }
 }
 
-function scrollToRange(cm, range\$\$1) {
+function scrollToRange(cm, range$$1) {
   resolveScrollToPos(cm);
-  cm.curOp.scrollToPos = range\$\$1;
+  cm.curOp.scrollToPos = range$$1;
 }
 
 // When an operation has its scrollToPos property set, and another
@@ -3483,11 +3483,11 @@ function scrollToRange(cm, range\$\$1) {
 // 'simulates' scrolling that position into view in a cheap way, so
 // that the effect of intermediate scroll commands is not ignored.
 function resolveScrollToPos(cm) {
-  var range\$\$1 = cm.curOp.scrollToPos;
-  if (range\$\$1) {
+  var range$$1 = cm.curOp.scrollToPos;
+  if (range$$1) {
     cm.curOp.scrollToPos = null;
-    var from = estimateCoords(cm, range\$\$1.from), to = estimateCoords(cm, range\$\$1.to);
-    scrollToCoordsRange(cm, from, to, range\$\$1.margin);
+    var from = estimateCoords(cm, range$$1.from), to = estimateCoords(cm, range$$1.to);
+    scrollToCoordsRange(cm, from, to, range$$1.margin);
   }
 }
 
@@ -3634,9 +3634,9 @@ NativeScrollbars.prototype.enableZeroWidthBar = function (bar, delay, type) {
     // (when the bar is hidden). If it is still visible, we keep
     // it enabled, if it's hidden, we disable pointer events.
     var box = bar.getBoundingClientRect();
-    var elt\$\$1 = type == "vert" ? document.elementFromPoint(box.right - 1, (box.top + box.bottom) / 2)
+    var elt$$1 = type == "vert" ? document.elementFromPoint(box.right - 1, (box.top + box.bottom) / 2)
         : document.elementFromPoint((box.right + box.left) / 2, box.bottom - 1);
-    if (elt\$\$1 != bar) { bar.style.pointerEvents = "none"; }
+    if (elt$$1 != bar) { bar.style.pointerEvents = "none"; }
     else { delay.set(1000, maybeDisable); }
   }
   delay.set(1000, maybeDisable);
@@ -3758,14 +3758,14 @@ function endOperations(group) {
   var ops = group.ops;
   for (var i = 0; i < ops.length; i++) // Read DOM
     { endOperation_R1(ops[i]); }
-  for (var i\$1 = 0; i\$1 < ops.length; i\$1++) // Write DOM (maybe)
-    { endOperation_W1(ops[i\$1]); }
-  for (var i\$2 = 0; i\$2 < ops.length; i\$2++) // Read DOM
-    { endOperation_R2(ops[i\$2]); }
-  for (var i\$3 = 0; i\$3 < ops.length; i\$3++) // Write DOM (maybe)
-    { endOperation_W2(ops[i\$3]); }
-  for (var i\$4 = 0; i\$4 < ops.length; i\$4++) // Read DOM
-    { endOperation_finish(ops[i\$4]); }
+  for (var i$1 = 0; i$1 < ops.length; i$1++) // Write DOM (maybe)
+    { endOperation_W1(ops[i$1]); }
+  for (var i$2 = 0; i$2 < ops.length; i$2++) // Read DOM
+    { endOperation_R2(ops[i$2]); }
+  for (var i$3 = 0; i$3 < ops.length; i$3++) // Write DOM (maybe)
+    { endOperation_W2(ops[i$3]); }
+  for (var i$4 = 0; i$4 < ops.length; i$4++) // Read DOM
+    { endOperation_finish(ops[i$4]); }
 }
 
 function endOperation_R1(op) {
@@ -3856,8 +3856,8 @@ function endOperation_finish(op) {
   var hidden = op.maybeHiddenMarkers, unhidden = op.maybeUnhiddenMarkers;
   if (hidden) { for (var i = 0; i < hidden.length; ++i)
     { if (!hidden[i].lines.length) { signal(hidden[i], "hide"); } } }
-  if (unhidden) { for (var i\$1 = 0; i\$1 < unhidden.length; ++i\$1)
-    { if (unhidden[i\$1].lines.length) { signal(unhidden[i\$1], "unhide"); } } }
+  if (unhidden) { for (var i$1 = 0; i$1 < unhidden.length; ++i$1)
+    { if (unhidden[i$1].lines.length) { signal(unhidden[i$1], "unhide"); } } }
 
   if (display.wrapper.offsetHeight)
     { doc.scrollTop = cm.display.scroller.scrollTop; }
@@ -3945,10 +3945,10 @@ function regChange(cm, from, to, lendiff) {
       resetView(cm);
     }
   } else if (to >= display.viewTo) { // Bottom overlap
-    var cut\$1 = viewCuttingPoint(cm, from, from, -1);
-    if (cut\$1) {
-      display.view = display.view.slice(0, cut\$1.index);
-      display.viewTo = cut\$1.lineN;
+    var cut$1 = viewCuttingPoint(cm, from, from, -1);
+    if (cut$1) {
+      display.view = display.view.slice(0, cut$1.index);
+      display.viewTo = cut$1.lineN;
     } else {
       resetView(cm);
     }
@@ -4124,10 +4124,10 @@ DisplayUpdate.prototype.signal = function (emitter, type) {
     { this.events.push(arguments); }
 };
 DisplayUpdate.prototype.finish = function () {
-    var this\$1 = this;
+    var this$1 = this;
 
   for (var i = 0; i < this.events.length; i++)
-    { signal.apply(null, this\$1.events[i]); }
+    { signal.apply(null, this$1.events[i]); }
 };
 
 function maybeClipScrollbars(cm) {
@@ -4162,11 +4162,11 @@ function restoreSelection(snapshot) {
   if (!snapshot || !snapshot.activeElt || snapshot.activeElt == activeElt()) { return }
   snapshot.activeElt.focus();
   if (snapshot.anchorNode && contains(document.body, snapshot.anchorNode) && contains(document.body, snapshot.focusNode)) {
-    var sel = window.getSelection(), range\$\$1 = document.createRange();
-    range\$\$1.setEnd(snapshot.anchorNode, snapshot.anchorOffset);
-    range\$\$1.collapse(false);
+    var sel = window.getSelection(), range$$1 = document.createRange();
+    range$$1.setEnd(snapshot.anchorNode, snapshot.anchorOffset);
+    range$$1.collapse(false);
     sel.removeAllRanges();
-    sel.addRange(range\$\$1);
+    sel.addRange(range$$1);
     sel.extend(snapshot.focusNode, snapshot.focusOffset);
   }
 }
@@ -4500,40 +4500,40 @@ var Selection = function(ranges, primIndex) {
 Selection.prototype.primary = function () { return this.ranges[this.primIndex] };
 
 Selection.prototype.equals = function (other) {
-    var this\$1 = this;
+    var this$1 = this;
 
   if (other == this) { return true }
   if (other.primIndex != this.primIndex || other.ranges.length != this.ranges.length) { return false }
   for (var i = 0; i < this.ranges.length; i++) {
-    var here = this\$1.ranges[i], there = other.ranges[i];
+    var here = this$1.ranges[i], there = other.ranges[i];
     if (!equalCursorPos(here.anchor, there.anchor) || !equalCursorPos(here.head, there.head)) { return false }
   }
   return true
 };
 
 Selection.prototype.deepCopy = function () {
-    var this\$1 = this;
+    var this$1 = this;
 
   var out = [];
   for (var i = 0; i < this.ranges.length; i++)
-    { out[i] = new Range(copyPos(this\$1.ranges[i].anchor), copyPos(this\$1.ranges[i].head)); }
+    { out[i] = new Range(copyPos(this$1.ranges[i].anchor), copyPos(this$1.ranges[i].head)); }
   return new Selection(out, this.primIndex)
 };
 
 Selection.prototype.somethingSelected = function () {
-    var this\$1 = this;
+    var this$1 = this;
 
   for (var i = 0; i < this.ranges.length; i++)
-    { if (!this\$1.ranges[i].empty()) { return true } }
+    { if (!this$1.ranges[i].empty()) { return true } }
   return false
 };
 
 Selection.prototype.contains = function (pos, end) {
-    var this\$1 = this;
+    var this$1 = this;
 
   if (!end) { end = pos; }
   for (var i = 0; i < this.ranges.length; i++) {
-    var range = this\$1.ranges[i];
+    var range = this$1.ranges[i];
     if (cmp(end, range.from()) >= 0 && cmp(pos, range.to()) <= 0)
       { return i }
   }
@@ -4657,16 +4657,16 @@ function isWholeLineUpdate(doc, change) {
 }
 
 // Perform a change on the document data structure.
-function updateDoc(doc, change, markedSpans, estimateHeight\$\$1) {
+function updateDoc(doc, change, markedSpans, estimateHeight$$1) {
   function spansFor(n) {return markedSpans ? markedSpans[n] : null}
   function update(line, text, spans) {
-    updateLine(line, text, spans, estimateHeight\$\$1);
+    updateLine(line, text, spans, estimateHeight$$1);
     signalLater(line, "change", line, change);
   }
   function linesFor(start, end) {
     var result = [];
     for (var i = start; i < end; ++i)
-      { result.push(new Line(text[i], spansFor(i), estimateHeight\$\$1)); }
+      { result.push(new Line(text[i], spansFor(i), estimateHeight$$1)); }
     return result
   }
 
@@ -4689,10 +4689,10 @@ function updateDoc(doc, change, markedSpans, estimateHeight\$\$1) {
     if (text.length == 1) {
       update(firstLine, firstLine.text.slice(0, from.ch) + lastText + firstLine.text.slice(to.ch), lastSpans);
     } else {
-      var added\$1 = linesFor(1, text.length - 1);
-      added\$1.push(new Line(lastText + firstLine.text.slice(to.ch), lastSpans, estimateHeight\$\$1));
+      var added$1 = linesFor(1, text.length - 1);
+      added$1.push(new Line(lastText + firstLine.text.slice(to.ch), lastSpans, estimateHeight$$1));
       update(firstLine, firstLine.text.slice(0, from.ch) + text[0], spansFor(0));
-      doc.insert(from.line + 1, added\$1);
+      doc.insert(from.line + 1, added$1);
     }
   } else if (text.length == 1) {
     update(firstLine, firstLine.text.slice(0, from.ch) + text[0] + lastLine.text.slice(to.ch), spansFor(0));
@@ -4700,9 +4700,9 @@ function updateDoc(doc, change, markedSpans, estimateHeight\$\$1) {
   } else {
     update(firstLine, firstLine.text.slice(0, from.ch) + text[0], spansFor(0));
     update(lastLine, lastText + lastLine.text.slice(to.ch), lastSpans);
-    var added\$2 = linesFor(1, text.length - 1);
+    var added$2 = linesFor(1, text.length - 1);
     if (nlines > 1) { doc.remove(from.line + 1, nlines - 1); }
-    doc.insert(from.line + 1, added\$2);
+    doc.insert(from.line + 1, added$2);
   }
 
   signalLater(doc, "change", doc, change);
@@ -4955,7 +4955,7 @@ function copyHistoryArray(events, newGroup, instantiateSel) {
     for (var j = 0; j < changes.length; ++j) {
       var change = changes[j], m = (void 0);
       newChanges.push({from: change.from, to: change.to, text: change.text});
-      if (newGroup) { for (var prop in change) { if (m = prop.match(/^spans_(\d+)\$/)) {
+      if (newGroup) { for (var prop in change) { if (m = prop.match(/^spans_(\d+)$/)) {
         if (indexOf(newGroup, Number(m[1])) > -1) {
           lst(newChanges)[prop] = change[prop];
           delete change[prop];
@@ -5027,11 +5027,11 @@ function filterSelectionChange(doc, sel, options) {
   var obj = {
     ranges: sel.ranges,
     update: function(ranges) {
-      var this\$1 = this;
+      var this$1 = this;
 
       this.ranges = [];
       for (var i = 0; i < ranges.length; i++)
-        { this\$1.ranges[i] = new Range(clipPos(doc, ranges[i].anchor),
+        { this$1.ranges[i] = new Range(clipPos(doc, ranges[i].anchor),
                                    clipPos(doc, ranges[i].head)); }
     },
     origin: options && options.origin
@@ -5301,8 +5301,8 @@ function makeChangeFromHistory(doc, type, allowSelectionOnly) {
     });
   };
 
-  for (var i\$1 = event.changes.length - 1; i\$1 >= 0; --i\$1) {
-    var returned = loop( i\$1 );
+  for (var i$1 = event.changes.length - 1; i$1 >= 0; --i$1) {
+    var returned = loop( i$1 );
 
     if ( returned ) return returned.v;
   }
@@ -5454,8 +5454,8 @@ function rebaseHistArray(array, from, to, diff) {
       }
       continue
     }
-    for (var j\$1 = 0; j\$1 < sub.changes.length; ++j\$1) {
-      var cur = sub.changes[j\$1];
+    for (var j$1 = 0; j$1 < sub.changes.length; ++j$1) {
+      var cur = sub.changes[j$1];
       if (to < cur.from.line) {
         cur.from = Pos(cur.from.line + diff, cur.from.ch);
         cur.to = Pos(cur.to.line + diff, cur.to.ch);
@@ -5503,13 +5503,13 @@ function changeLine(doc, handle, changeType, op) {
 // See also http://marijnhaverbeke.nl/blog/codemirror-line-tree.html
 
 function LeafChunk(lines) {
-  var this\$1 = this;
+  var this$1 = this;
 
   this.lines = lines;
   this.parent = null;
   var height = 0;
   for (var i = 0; i < lines.length; ++i) {
-    lines[i].parent = this\$1;
+    lines[i].parent = this$1;
     height += lines[i].height;
   }
   this.height = height;
@@ -5520,11 +5520,11 @@ LeafChunk.prototype = {
 
   // Remove the n lines at offset 'at'.
   removeInner: function(at, n) {
-    var this\$1 = this;
+    var this$1 = this;
 
     for (var i = at, e = at + n; i < e; ++i) {
-      var line = this\$1.lines[i];
-      this\$1.height -= line.height;
+      var line = this$1.lines[i];
+      this$1.height -= line.height;
       cleanUpLine(line);
       signalLater(line, "delete");
     }
@@ -5539,31 +5539,31 @@ LeafChunk.prototype = {
   // Insert the given array of lines at offset 'at', count them as
   // having the given height.
   insertInner: function(at, lines, height) {
-    var this\$1 = this;
+    var this$1 = this;
 
     this.height += height;
     this.lines = this.lines.slice(0, at).concat(lines).concat(this.lines.slice(at));
-    for (var i = 0; i < lines.length; ++i) { lines[i].parent = this\$1; }
+    for (var i = 0; i < lines.length; ++i) { lines[i].parent = this$1; }
   },
 
   // Used to iterate over a part of the tree.
   iterN: function(at, n, op) {
-    var this\$1 = this;
+    var this$1 = this;
 
     for (var e = at + n; at < e; ++at)
-      { if (op(this\$1.lines[at])) { return true } }
+      { if (op(this$1.lines[at])) { return true } }
   }
 };
 
 function BranchChunk(children) {
-  var this\$1 = this;
+  var this$1 = this;
 
   this.children = children;
   var size = 0, height = 0;
   for (var i = 0; i < children.length; ++i) {
     var ch = children[i];
     size += ch.chunkSize(); height += ch.height;
-    ch.parent = this\$1;
+    ch.parent = this$1;
   }
   this.size = size;
   this.height = height;
@@ -5574,16 +5574,16 @@ BranchChunk.prototype = {
   chunkSize: function() { return this.size },
 
   removeInner: function(at, n) {
-    var this\$1 = this;
+    var this$1 = this;
 
     this.size -= n;
     for (var i = 0; i < this.children.length; ++i) {
-      var child = this\$1.children[i], sz = child.chunkSize();
+      var child = this$1.children[i], sz = child.chunkSize();
       if (at < sz) {
         var rm = Math.min(n, sz - at), oldHeight = child.height;
         child.removeInner(at, rm);
-        this\$1.height -= oldHeight - child.height;
-        if (sz == rm) { this\$1.children.splice(i--, 1); child.parent = null; }
+        this$1.height -= oldHeight - child.height;
+        if (sz == rm) { this$1.children.splice(i--, 1); child.parent = null; }
         if ((n -= rm) == 0) { break }
         at = 0;
       } else { at -= sz; }
@@ -5600,18 +5600,18 @@ BranchChunk.prototype = {
   },
 
   collapse: function(lines) {
-    var this\$1 = this;
+    var this$1 = this;
 
-    for (var i = 0; i < this.children.length; ++i) { this\$1.children[i].collapse(lines); }
+    for (var i = 0; i < this.children.length; ++i) { this$1.children[i].collapse(lines); }
   },
 
   insertInner: function(at, lines, height) {
-    var this\$1 = this;
+    var this$1 = this;
 
     this.size += lines.length;
     this.height += height;
     for (var i = 0; i < this.children.length; ++i) {
-      var child = this\$1.children[i], sz = child.chunkSize();
+      var child = this$1.children[i], sz = child.chunkSize();
       if (at <= sz) {
         child.insertInner(at, lines, height);
         if (child.lines && child.lines.length > 50) {
@@ -5621,11 +5621,11 @@ BranchChunk.prototype = {
           for (var pos = remaining; pos < child.lines.length;) {
             var leaf = new LeafChunk(child.lines.slice(pos, pos += 25));
             child.height -= leaf.height;
-            this\$1.children.splice(++i, 0, leaf);
-            leaf.parent = this\$1;
+            this$1.children.splice(++i, 0, leaf);
+            leaf.parent = this$1;
           }
           child.lines = child.lines.slice(0, remaining);
-          this\$1.maybeSpill();
+          this$1.maybeSpill();
         }
         break
       }
@@ -5657,10 +5657,10 @@ BranchChunk.prototype = {
   },
 
   iterN: function(at, n, op) {
-    var this\$1 = this;
+    var this$1 = this;
 
     for (var i = 0; i < this.children.length; ++i) {
-      var child = this\$1.children[i], sz = child.chunkSize();
+      var child = this$1.children[i], sz = child.chunkSize();
       if (at < sz) {
         var used = Math.min(n, sz - at);
         if (child.iterN(at, used, op)) { return true }
@@ -5674,20 +5674,20 @@ BranchChunk.prototype = {
 // Line widgets are block elements displayed above or below a line.
 
 var LineWidget = function(doc, node, options) {
-  var this\$1 = this;
+  var this$1 = this;
 
   if (options) { for (var opt in options) { if (options.hasOwnProperty(opt))
-    { this\$1[opt] = options[opt]; } } }
+    { this$1[opt] = options[opt]; } } }
   this.doc = doc;
   this.node = node;
 };
 
 LineWidget.prototype.clear = function () {
-    var this\$1 = this;
+    var this$1 = this;
 
   var cm = this.doc.cm, ws = this.line.widgets, line = this.line, no = lineNo(line);
   if (no == null || !ws) { return }
-  for (var i = 0; i < ws.length; ++i) { if (ws[i] == this\$1) { ws.splice(i--, 1); } }
+  for (var i = 0; i < ws.length; ++i) { if (ws[i] == this$1) { ws.splice(i--, 1); } }
   if (!ws.length) { line.widgets = null; }
   var height = widgetHeight(this);
   updateLineHeight(line, Math.max(0, line.height - height));
@@ -5701,7 +5701,7 @@ LineWidget.prototype.clear = function () {
 };
 
 LineWidget.prototype.changed = function () {
-    var this\$1 = this;
+    var this$1 = this;
 
   var oldH = this.height, cm = this.doc.cm, line = this.line;
   this.height = null;
@@ -5712,7 +5712,7 @@ LineWidget.prototype.changed = function () {
     runInOp(cm, function () {
       cm.curOp.forceUpdate = true;
       adjustScrollWhenAboveVisible(cm, line, diff);
-      signalLater(cm, "lineWidgetChanged", cm, this\$1, lineNo(line));
+      signalLater(cm, "lineWidgetChanged", cm, this$1, lineNo(line));
     });
   }
 };
@@ -5770,7 +5770,7 @@ var TextMarker = function(doc, type) {
 
 // Clear the marker.
 TextMarker.prototype.clear = function () {
-    var this\$1 = this;
+    var this$1 = this;
 
   if (this.explicitlyCleared) { return }
   var cm = this.doc.cm, withOp = cm && !cm.curOp;
@@ -5781,19 +5781,19 @@ TextMarker.prototype.clear = function () {
   }
   var min = null, max = null;
   for (var i = 0; i < this.lines.length; ++i) {
-    var line = this\$1.lines[i];
-    var span = getMarkedSpanFor(line.markedSpans, this\$1);
-    if (cm && !this\$1.collapsed) { regLineChange(cm, lineNo(line), "text"); }
+    var line = this$1.lines[i];
+    var span = getMarkedSpanFor(line.markedSpans, this$1);
+    if (cm && !this$1.collapsed) { regLineChange(cm, lineNo(line), "text"); }
     else if (cm) {
       if (span.to != null) { max = lineNo(line); }
       if (span.from != null) { min = lineNo(line); }
     }
     line.markedSpans = removeMarkedSpan(line.markedSpans, span);
-    if (span.from == null && this\$1.collapsed && !lineIsHidden(this\$1.doc, line) && cm)
+    if (span.from == null && this$1.collapsed && !lineIsHidden(this$1.doc, line) && cm)
       { updateLineHeight(line, textHeight(cm.display)); }
   }
-  if (cm && this.collapsed && !cm.options.lineWrapping) { for (var i\$1 = 0; i\$1 < this.lines.length; ++i\$1) {
-    var visual = visualLine(this\$1.lines[i\$1]), len = lineLength(visual);
+  if (cm && this.collapsed && !cm.options.lineWrapping) { for (var i$1 = 0; i$1 < this.lines.length; ++i$1) {
+    var visual = visualLine(this$1.lines[i$1]), len = lineLength(visual);
     if (len > cm.display.maxLineLength) {
       cm.display.maxLine = visual;
       cm.display.maxLineLength = len;
@@ -5819,13 +5819,13 @@ TextMarker.prototype.clear = function () {
 // Pos objects returned contain a line object, rather than a line
 // number (used to prevent looking up the same line twice).
 TextMarker.prototype.find = function (side, lineObj) {
-    var this\$1 = this;
+    var this$1 = this;
 
   if (side == null && this.type == "bookmark") { side = 1; }
   var from, to;
   for (var i = 0; i < this.lines.length; ++i) {
-    var line = this\$1.lines[i];
-    var span = getMarkedSpanFor(line.markedSpans, this\$1);
+    var line = this$1.lines[i];
+    var span = getMarkedSpanFor(line.markedSpans, this$1);
     if (span.from != null) {
       from = Pos(lineObj ? line : lineNo(line), span.from);
       if (side == -1) { return from }
@@ -5841,7 +5841,7 @@ TextMarker.prototype.find = function (side, lineObj) {
 // Signals that the marker's widget changed, and surrounding layout
 // should be recomputed.
 TextMarker.prototype.changed = function () {
-    var this\$1 = this;
+    var this$1 = this;
 
   var pos = this.find(-1, true), widget = this, cm = this.doc.cm;
   if (!pos || !cm) { return }
@@ -5860,7 +5860,7 @@ TextMarker.prototype.changed = function () {
       if (dHeight)
         { updateLineHeight(line, line.height + dHeight); }
     }
-    signalLater(cm, "markerChanged", cm, this\$1);
+    signalLater(cm, "markerChanged", cm, this$1);
   });
 };
 
@@ -5957,21 +5957,21 @@ function markText(doc, from, to, options, type) {
 // implemented as a meta-marker-object controlling multiple normal
 // markers.
 var SharedTextMarker = function(markers, primary) {
-  var this\$1 = this;
+  var this$1 = this;
 
   this.markers = markers;
   this.primary = primary;
   for (var i = 0; i < markers.length; ++i)
-    { markers[i].parent = this\$1; }
+    { markers[i].parent = this$1; }
 };
 
 SharedTextMarker.prototype.clear = function () {
-    var this\$1 = this;
+    var this$1 = this;
 
   if (this.explicitlyCleared) { return }
   this.explicitlyCleared = true;
   for (var i = 0; i < this.markers.length; ++i)
-    { this\$1.markers[i].clear(); }
+    { this$1.markers[i].clear(); }
   signalLater(this, "clear");
 };
 
@@ -6114,11 +6114,11 @@ Doc.prototype = createObj(BranchChunk.prototype, {
   clipPos: function(pos) {return clipPos(this, pos)},
 
   getCursor: function(start) {
-    var range\$\$1 = this.sel.primary(), pos;
-    if (start == null || start == "head") { pos = range\$\$1.head; }
-    else if (start == "anchor") { pos = range\$\$1.anchor; }
-    else if (start == "end" || start == "to" || start === false) { pos = range\$\$1.to(); }
-    else { pos = range\$\$1.from(); }
+    var range$$1 = this.sel.primary(), pos;
+    if (start == null || start == "head") { pos = range$$1.head; }
+    else if (start == "anchor") { pos = range$$1.anchor; }
+    else if (start == "end" || start == "to" || start === false) { pos = range$$1.to(); }
+    else { pos = range$$1.from(); }
     return pos
   },
   listSelections: function() { return this.sel.ranges },
@@ -6141,13 +6141,13 @@ Doc.prototype = createObj(BranchChunk.prototype, {
     extendSelections(this, clipPosArray(this, heads), options);
   }),
   setSelections: docMethodOp(function(ranges, primary, options) {
-    var this\$1 = this;
+    var this$1 = this;
 
     if (!ranges.length) { return }
     var out = [];
     for (var i = 0; i < ranges.length; i++)
-      { out[i] = new Range(clipPos(this\$1, ranges[i].anchor),
-                         clipPos(this\$1, ranges[i].head)); }
+      { out[i] = new Range(clipPos(this$1, ranges[i].anchor),
+                         clipPos(this$1, ranges[i].head)); }
     if (primary == null) { primary = Math.min(ranges.length - 1, this.sel.primIndex); }
     setSelection(this, normalizeSelection(out, primary), options);
   }),
@@ -6158,23 +6158,23 @@ Doc.prototype = createObj(BranchChunk.prototype, {
   }),
 
   getSelection: function(lineSep) {
-    var this\$1 = this;
+    var this$1 = this;
 
     var ranges = this.sel.ranges, lines;
     for (var i = 0; i < ranges.length; i++) {
-      var sel = getBetween(this\$1, ranges[i].from(), ranges[i].to());
+      var sel = getBetween(this$1, ranges[i].from(), ranges[i].to());
       lines = lines ? lines.concat(sel) : sel;
     }
     if (lineSep === false) { return lines }
     else { return lines.join(lineSep || this.lineSeparator()) }
   },
   getSelections: function(lineSep) {
-    var this\$1 = this;
+    var this$1 = this;
 
     var parts = [], ranges = this.sel.ranges;
     for (var i = 0; i < ranges.length; i++) {
-      var sel = getBetween(this\$1, ranges[i].from(), ranges[i].to());
-      if (lineSep !== false) { sel = sel.join(lineSep || this\$1.lineSeparator()); }
+      var sel = getBetween(this$1, ranges[i].from(), ranges[i].to());
+      if (lineSep !== false) { sel = sel.join(lineSep || this$1.lineSeparator()); }
       parts[i] = sel;
     }
     return parts
@@ -6186,16 +6186,16 @@ Doc.prototype = createObj(BranchChunk.prototype, {
     this.replaceSelections(dup, collapse, origin || "+input");
   },
   replaceSelections: docMethodOp(function(code, collapse, origin) {
-    var this\$1 = this;
+    var this$1 = this;
 
     var changes = [], sel = this.sel;
     for (var i = 0; i < sel.ranges.length; i++) {
-      var range\$\$1 = sel.ranges[i];
-      changes[i] = {from: range\$\$1.from(), to: range\$\$1.to(), text: this\$1.splitLines(code[i]), origin: origin};
+      var range$$1 = sel.ranges[i];
+      changes[i] = {from: range$$1.from(), to: range$$1.to(), text: this$1.splitLines(code[i]), origin: origin};
     }
     var newSel = collapse && collapse != "end" && computeReplacedSel(this, changes, collapse);
-    for (var i\$1 = changes.length - 1; i\$1 >= 0; i\$1--)
-      { makeChange(this\$1, changes[i\$1]); }
+    for (var i$1 = changes.length - 1; i$1 >= 0; i$1--)
+      { makeChange(this$1, changes[i$1]); }
     if (newSel) { setSelectionReplaceHistory(this, newSel); }
     else if (this.cm) { ensureCursorVisible(this.cm); }
   }),
@@ -6210,7 +6210,7 @@ Doc.prototype = createObj(BranchChunk.prototype, {
   historySize: function() {
     var hist = this.history, done = 0, undone = 0;
     for (var i = 0; i < hist.done.length; i++) { if (!hist.done[i].ranges) { ++done; } }
-    for (var i\$1 = 0; i\$1 < hist.undone.length; i\$1++) { if (!hist.undone[i\$1].ranges) { ++undone; } }
+    for (var i$1 = 0; i$1 < hist.undone.length; i$1++) { if (!hist.undone[i$1].ranges) { ++undone; } }
     return {undo: done, redo: undone}
   },
   clearHistory: function() {this.history = new History(this.history.maxGeneration);},
@@ -6247,11 +6247,11 @@ Doc.prototype = createObj(BranchChunk.prototype, {
   }),
 
   clearGutter: docMethodOp(function(gutterID) {
-    var this\$1 = this;
+    var this$1 = this;
 
     this.iter(function (line) {
       if (line.gutterMarkers && line.gutterMarkers[gutterID]) {
-        changeLine(this\$1, line, "gutter", function () {
+        changeLine(this$1, line, "gutter", function () {
           line.gutterMarkers[gutterID] = null;
           if (isEmpty(line.gutterMarkers)) { line.gutterMarkers = null; }
           return true
@@ -6334,18 +6334,18 @@ Doc.prototype = createObj(BranchChunk.prototype, {
   },
   findMarks: function(from, to, filter) {
     from = clipPos(this, from); to = clipPos(this, to);
-    var found = [], lineNo\$\$1 = from.line;
+    var found = [], lineNo$$1 = from.line;
     this.iter(from.line, to.line + 1, function (line) {
       var spans = line.markedSpans;
       if (spans) { for (var i = 0; i < spans.length; i++) {
         var span = spans[i];
-        if (!(span.to != null && lineNo\$\$1 == from.line && from.ch >= span.to ||
-              span.from == null && lineNo\$\$1 != from.line ||
-              span.from != null && lineNo\$\$1 == to.line && span.from >= to.ch) &&
+        if (!(span.to != null && lineNo$$1 == from.line && from.ch >= span.to ||
+              span.from == null && lineNo$$1 != from.line ||
+              span.from != null && lineNo$$1 == to.line && span.from >= to.ch) &&
             (!filter || filter(span.marker)))
           { found.push(span.marker.parent || span.marker); }
       } }
-      ++lineNo\$\$1;
+      ++lineNo$$1;
     });
     return found
   },
@@ -6360,14 +6360,14 @@ Doc.prototype = createObj(BranchChunk.prototype, {
   },
 
   posFromIndex: function(off) {
-    var ch, lineNo\$\$1 = this.first, sepSize = this.lineSeparator().length;
+    var ch, lineNo$$1 = this.first, sepSize = this.lineSeparator().length;
     this.iter(function (line) {
       var sz = line.text.length + sepSize;
       if (sz > off) { ch = off; return true }
       off -= sz;
-      ++lineNo\$\$1;
+      ++lineNo$$1;
     });
-    return clipPos(this, Pos(lineNo\$\$1, ch))
+    return clipPos(this, Pos(lineNo$$1, ch))
   },
   indexFromPos: function (coords) {
     coords = clipPos(this, coords);
@@ -6406,15 +6406,15 @@ Doc.prototype = createObj(BranchChunk.prototype, {
     return copy
   },
   unlinkDoc: function(other) {
-    var this\$1 = this;
+    var this$1 = this;
 
-    if (other instanceof CodeMirror\$1) { other = other.doc; }
+    if (other instanceof CodeMirror$1) { other = other.doc; }
     if (this.linked) { for (var i = 0; i < this.linked.length; ++i) {
-      var link = this\$1.linked[i];
+      var link = this$1.linked[i];
       if (link.doc != other) { continue }
-      this\$1.linked.splice(i, 1);
-      other.unlinkDoc(this\$1);
-      detachSharedMarkers(findSharedMarkers(this\$1));
+      this$1.linked.splice(i, 1);
+      other.unlinkDoc(this$1);
+      detachSharedMarkers(findSharedMarkers(this$1));
       break
     } }
     // If the histories were shared, split them again
@@ -6497,15 +6497,15 @@ function onDrop(e) {
       return
     }
     try {
-      var text\$1 = e.dataTransfer.getData("Text");
-      if (text\$1) {
+      var text$1 = e.dataTransfer.getData("Text");
+      if (text$1) {
         var selected;
         if (cm.state.draggingText && !cm.state.draggingText.copy)
           { selected = cm.listSelections(); }
         setSelectionNoUndo(cm.doc, simpleSelection(pos, pos));
-        if (selected) { for (var i\$1 = 0; i\$1 < selected.length; ++i\$1)
-          { replaceRange(cm.doc, "", selected[i\$1].anchor, selected[i\$1].head, "drag"); } }
-        cm.replaceSelection(text\$1, "around", "paste");
+        if (selected) { for (var i$1 = 0; i$1 < selected.length; ++i$1)
+          { replaceRange(cm.doc, "", selected[i$1].anchor, selected[i$1].head, "drag"); } }
+        cm.replaceSelection(text$1, "around", "paste");
         cm.display.input.focus();
       }
     }
@@ -6609,9 +6609,9 @@ var keyNames = {
 // Number keys
 for (var i = 0; i < 10; i++) { keyNames[i + 48] = keyNames[i + 96] = String(i); }
 // Alphabetic keys
-for (var i\$1 = 65; i\$1 <= 90; i\$1++) { keyNames[i\$1] = String.fromCharCode(i\$1); }
+for (var i$1 = 65; i$1 <= 90; i$1++) { keyNames[i$1] = String.fromCharCode(i$1); }
 // Function keys
-for (var i\$2 = 1; i\$2 <= 12; i\$2++) { keyNames[i\$2 + 111] = keyNames[i\$2 + 63235] = "F" + i\$2; }
+for (var i$2 = 1; i$2 <= 12; i$2++) { keyNames[i$2 + 111] = keyNames[i$2 + 63235] = "F" + i$2; }
 
 var keyMap = {};
 
@@ -6659,15 +6659,15 @@ keyMap["default"] = mac ? keyMap.macDefault : keyMap.pcDefault;
 // KEYMAP DISPATCH
 
 function normalizeKeyName(name) {
-  var parts = name.split(/-(?!\$)/);
+  var parts = name.split(/-(?!$)/);
   name = parts[parts.length - 1];
   var alt, ctrl, shift, cmd;
   for (var i = 0; i < parts.length - 1; i++) {
     var mod = parts[i];
-    if (/^(cmd|meta|m)\$/i.test(mod)) { cmd = true; }
-    else if (/^a(lt)?\$/i.test(mod)) { alt = true; }
-    else if (/^(c|ctrl|control)\$/i.test(mod)) { ctrl = true; }
-    else if (/^s(hift)?\$/i.test(mod)) { shift = true; }
+    if (/^(cmd|meta|m)$/i.test(mod)) { cmd = true; }
+    else if (/^a(lt)?$/i.test(mod)) { alt = true; }
+    else if (/^(c|ctrl|control)$/i.test(mod)) { ctrl = true; }
+    else if (/^s(hift)?$/i.test(mod)) { shift = true; }
     else { throw new Error("Unrecognized modifier name: " + mod) }
   }
   if (alt) { name = "Alt-" + name; }
@@ -6686,7 +6686,7 @@ function normalizeKeyMap(keymap) {
   var copy = {};
   for (var keyname in keymap) { if (keymap.hasOwnProperty(keyname)) {
     var value = keymap[keyname];
-    if (/^(name|fallthrough|(de|at)tach)\$/.test(keyname)) { continue }
+    if (/^(name|fallthrough|(de|at)tach)$/.test(keyname)) { continue }
     if (value == "...") { delete keymap[keyname]; continue }
 
     var keys = map(keyname.split(" "), normalizeKeyName);
@@ -6709,18 +6709,18 @@ function normalizeKeyMap(keymap) {
   return keymap
 }
 
-function lookupKey(key, map\$\$1, handle, context) {
-  map\$\$1 = getKeyMap(map\$\$1);
-  var found = map\$\$1.call ? map\$\$1.call(key, context) : map\$\$1[key];
+function lookupKey(key, map$$1, handle, context) {
+  map$$1 = getKeyMap(map$$1);
+  var found = map$$1.call ? map$$1.call(key, context) : map$$1[key];
   if (found === false) { return "nothing" }
   if (found === "...") { return "multi" }
   if (found != null && handle(found)) { return "handled" }
 
-  if (map\$\$1.fallthrough) {
-    if (Object.prototype.toString.call(map\$\$1.fallthrough) != "[object Array]")
-      { return lookupKey(key, map\$\$1.fallthrough, handle, context) }
-    for (var i = 0; i < map\$\$1.fallthrough.length; i++) {
-      var result = lookupKey(key, map\$\$1.fallthrough[i], handle, context);
+  if (map$$1.fallthrough) {
+    if (Object.prototype.toString.call(map$$1.fallthrough) != "[object Array]")
+      { return lookupKey(key, map$$1.fallthrough, handle, context) }
+    for (var i = 0; i < map$$1.fallthrough.length; i++) {
+      var result = lookupKey(key, map$$1.fallthrough[i], handle, context);
       if (result) { return result }
     }
   }
@@ -7022,8 +7022,8 @@ var commands = {
     for (var i = sels.length - 1; i >= 0; i--)
       { cm.replaceRange(cm.doc.lineSeparator(), sels[i].anchor, sels[i].head, "+input"); }
     sels = cm.listSelections();
-    for (var i\$1 = 0; i\$1 < sels.length; i\$1++)
-      { cm.indentLine(sels[i\$1].from().line, null, true); }
+    for (var i$1 = 0; i$1 < sels.length; i$1++)
+      { cm.indentLine(sels[i$1].from().line, null, true); }
     ensureCursorVisible(cm);
   }); },
   openLine: function (cm) { return cm.replaceSelection("\n", "start"); },
@@ -7094,7 +7094,7 @@ function dispatchKey(cm, name, e, handle) {
   var seq = cm.state.keySeq;
   if (seq) {
     if (isModifierKey(name)) { return "handled" }
-    if (/\'\$/.test(name))
+    if (/\'$/.test(name))
       { cm.state.keySeq = null; }
     else
       { stopSeq.set(50, function () {
@@ -7396,11 +7396,11 @@ function leftButtonSelect(cm, event, start, behavior) {
     start = posFromMouse(cm, event, true, true);
     ourIndex = -1;
   } else {
-    var range\$\$1 = rangeForUnit(cm, start, behavior.unit);
+    var range$$1 = rangeForUnit(cm, start, behavior.unit);
     if (behavior.extend)
-      { ourRange = extendRange(ourRange, range\$\$1.anchor, range\$\$1.head, behavior.extend); }
+      { ourRange = extendRange(ourRange, range$$1.anchor, range$$1.head, behavior.extend); }
     else
-      { ourRange = range\$\$1; }
+      { ourRange = range$$1; }
   }
 
   if (!behavior.addNew) {
@@ -7443,18 +7443,18 @@ function leftButtonSelect(cm, event, start, behavior) {
       cm.scrollIntoView(pos);
     } else {
       var oldRange = ourRange;
-      var range\$\$1 = rangeForUnit(cm, pos, behavior.unit);
+      var range$$1 = rangeForUnit(cm, pos, behavior.unit);
       var anchor = oldRange.anchor, head;
-      if (cmp(range\$\$1.anchor, anchor) > 0) {
-        head = range\$\$1.head;
-        anchor = minPos(oldRange.from(), range\$\$1.anchor);
+      if (cmp(range$$1.anchor, anchor) > 0) {
+        head = range$$1.head;
+        anchor = minPos(oldRange.from(), range$$1.anchor);
       } else {
-        head = range\$\$1.anchor;
-        anchor = maxPos(oldRange.to(), range\$\$1.head);
+        head = range$$1.anchor;
+        anchor = maxPos(oldRange.to(), range$$1.head);
       }
-      var ranges\$1 = startSel.ranges.slice(0);
-      ranges\$1[ourIndex] = bidiSimplify(cm, new Range(clipPos(doc, anchor), head));
-      setSelection(doc, normalizeSelection(ranges\$1, ourIndex), sel_mouse);
+      var ranges$1 = startSel.ranges.slice(0);
+      ranges$1[ourIndex] = bidiSimplify(cm, new Range(clipPos(doc, anchor), head));
+      setSelection(doc, normalizeSelection(ranges$1, ourIndex), sel_mouse);
     }
   }
 
@@ -7507,17 +7507,17 @@ function leftButtonSelect(cm, event, start, behavior) {
 
 // Used when mouse-selecting to adjust the anchor to the proper side
 // of a bidi jump depending on the visual position of the head.
-function bidiSimplify(cm, range\$\$1) {
-  var anchor = range\$\$1.anchor;
-  var head = range\$\$1.head;
+function bidiSimplify(cm, range$$1) {
+  var anchor = range$$1.anchor;
+  var head = range$$1.head;
   var anchorLine = getLine(cm.doc, anchor.line);
-  if (cmp(anchor, head) == 0 && anchor.sticky == head.sticky) { return range\$\$1 }
+  if (cmp(anchor, head) == 0 && anchor.sticky == head.sticky) { return range$$1 }
   var order = getOrder(anchorLine);
-  if (!order) { return range\$\$1 }
+  if (!order) { return range$$1 }
   var index = getBidiPartAt(order, anchor.ch, anchor.sticky), part = order[index];
-  if (part.from != anchor.ch && part.to != anchor.ch) { return range\$\$1 }
+  if (part.from != anchor.ch && part.to != anchor.ch) { return range$$1 }
   var boundary = index + ((part.from == anchor.ch) == (part.level != 1) ? 0 : 1);
-  if (boundary == 0 || boundary == order.length) { return range\$\$1 }
+  if (boundary == 0 || boundary == order.length) { return range$$1 }
 
   // Compute the relative visual position of the head compared to the
   // anchor (<0 is to the left, >0 to the right)
@@ -7536,7 +7536,7 @@ function bidiSimplify(cm, range\$\$1) {
   var usePart = order[boundary + (leftSide ? -1 : 0)];
   var from = leftSide == (usePart.level == 1);
   var ch = from ? usePart.from : usePart.to, sticky = from ? "after" : "before";
-  return anchor.ch == ch && anchor.sticky == sticky ? range\$\$1 : new Range(new Pos(anchor.line, ch, sticky), head)
+  return anchor.ch == ch && anchor.sticky == sticky ? range$$1 : new Range(new Pos(anchor.line, ch, sticky), head)
 }
 
 
@@ -7774,10 +7774,10 @@ function wrappingChanged(cm) {
 // A CodeMirror instance represents an editor. This is the object
 // that user code is usually dealing with.
 
-function CodeMirror\$1(place, options) {
-  var this\$1 = this;
+function CodeMirror$1(place, options) {
+  var this$1 = this;
 
-  if (!(this instanceof CodeMirror\$1)) { return new CodeMirror\$1(place, options) }
+  if (!(this instanceof CodeMirror$1)) { return new CodeMirror$1(place, options) }
 
   this.options = options = options ? copyObj(options) : {};
   // Determine effective options based on given values and defaults.
@@ -7789,7 +7789,7 @@ function CodeMirror\$1(place, options) {
   else if (options.mode) { doc.modeOption = options.mode; }
   this.doc = doc;
 
-  var input = new CodeMirror\$1.inputStyles[options.inputStyle](this);
+  var input = new CodeMirror$1.inputStyles[options.inputStyle](this);
   var display = this.display = new Display(place, doc, input);
   display.wrapper.CodeMirror = this;
   updateGutters(this);
@@ -7818,7 +7818,7 @@ function CodeMirror\$1(place, options) {
 
   // Override magic textarea content restore that IE sometimes does
   // on our hidden textarea on reload
-  if (ie && ie_version < 11) { setTimeout(function () { return this\$1.display.input.reset(true); }, 20); }
+  if (ie && ie_version < 11) { setTimeout(function () { return this$1.display.input.reset(true); }, 20); }
 
   registerEventHandlers(this);
   ensureGlobalHandlers();
@@ -7833,10 +7833,10 @@ function CodeMirror\$1(place, options) {
     { onBlur(this); }
 
   for (var opt in optionHandlers) { if (optionHandlers.hasOwnProperty(opt))
-    { optionHandlers[opt](this\$1, options[opt], Init); } }
+    { optionHandlers[opt](this$1, options[opt], Init); } }
   maybeUpdateLineNumberWidth(this);
   if (options.finishInit) { options.finishInit(this); }
-  for (var i = 0; i < initHooks.length; ++i) { initHooks[i](this\$1); }
+  for (var i = 0; i < initHooks.length; ++i) { initHooks[i](this$1); }
   endOperation(this);
   // Suppress optimizelegibility in Webkit, since it breaks text
   // measuring on line wrapping boundaries.
@@ -7846,9 +7846,9 @@ function CodeMirror\$1(place, options) {
 }
 
 // The default configuration options.
-CodeMirror\$1.defaults = defaults;
+CodeMirror$1.defaults = defaults;
 // Functions to run when options are changed.
-CodeMirror\$1.optionHandlers = optionHandlers;
+CodeMirror$1.optionHandlers = optionHandlers;
 
 // Attach the necessary event handlers when initializing the editor
 function registerEventHandlers(cm) {
@@ -7959,7 +7959,7 @@ function registerEventHandlers(cm) {
 }
 
 var initHooks = [];
-CodeMirror\$1.defineInitHook = function (f) { return initHooks.push(f); };
+CodeMirror$1.defineInitHook = function (f) { return initHooks.push(f); };
 
 // Indent the given line. The how parameter can be "smart",
 // "add"/null, "subtract", or "prev". When aggressive is false
@@ -8014,11 +8014,11 @@ function indentLine(cm, n, how, aggressive) {
   } else {
     // Ensure that, if the cursor was in the whitespace at the start
     // of the line, it is moved to the end of that space.
-    for (var i\$1 = 0; i\$1 < doc.sel.ranges.length; i\$1++) {
-      var range = doc.sel.ranges[i\$1];
+    for (var i$1 = 0; i$1 < doc.sel.ranges.length; i$1++) {
+      var range = doc.sel.ranges[i$1];
       if (range.head.line == n && range.head.ch < curSpaceString.length) {
-        var pos\$1 = Pos(n, curSpaceString.length);
-        replaceOneSelection(doc, i\$1, new Range(pos\$1, pos\$1));
+        var pos$1 = Pos(n, curSpaceString.length);
+        replaceOneSelection(doc, i$1, new Range(pos$1, pos$1));
         break
       }
     }
@@ -8056,10 +8056,10 @@ function applyTextInput(cm, inserted, deleted, sel, origin) {
 
   var updateInput;
   // Normal behavior is to insert the new text into every selection
-  for (var i\$1 = sel.ranges.length - 1; i\$1 >= 0; i\$1--) {
-    var range\$\$1 = sel.ranges[i\$1];
-    var from = range\$\$1.from(), to = range\$\$1.to();
-    if (range\$\$1.empty()) {
+  for (var i$1 = sel.ranges.length - 1; i$1 >= 0; i$1--) {
+    var range$$1 = sel.ranges[i$1];
+    var from = range$$1.from(), to = range$$1.to();
+    if (range$$1.empty()) {
       if (deleted && deleted > 0) // Handle deletion
         { from = Pos(from.line, from.ch - deleted); }
       else if (cm.state.overwrite && !paste) // Handle overwrite
@@ -8068,7 +8068,7 @@ function applyTextInput(cm, inserted, deleted, sel, origin) {
         { from = to = Pos(from.line, 0); }
     }
     updateInput = cm.curOp.updateInput;
-    var changeEvent = {from: from, to: to, text: multiPaste ? multiPaste[i\$1 % multiPaste.length] : textLines,
+    var changeEvent = {from: from, to: to, text: multiPaste ? multiPaste[i$1 % multiPaste.length] : textLines,
                        origin: origin || (paste ? "paste" : cm.state.cutIncoming ? "cut" : "+input")};
     makeChange(cm.doc, changeEvent);
     signalLater(cm, "inputRead", cm, changeEvent);
@@ -8098,21 +8098,21 @@ function triggerElectric(cm, inserted) {
   var sel = cm.doc.sel;
 
   for (var i = sel.ranges.length - 1; i >= 0; i--) {
-    var range\$\$1 = sel.ranges[i];
-    if (range\$\$1.head.ch > 100 || (i && sel.ranges[i - 1].head.line == range\$\$1.head.line)) { continue }
-    var mode = cm.getModeAt(range\$\$1.head);
+    var range$$1 = sel.ranges[i];
+    if (range$$1.head.ch > 100 || (i && sel.ranges[i - 1].head.line == range$$1.head.line)) { continue }
+    var mode = cm.getModeAt(range$$1.head);
     var indented = false;
     if (mode.electricChars) {
       for (var j = 0; j < mode.electricChars.length; j++)
         { if (inserted.indexOf(mode.electricChars.charAt(j)) > -1) {
-          indented = indentLine(cm, range\$\$1.head.line, "smart");
+          indented = indentLine(cm, range$$1.head.line, "smart");
           break
         } }
     } else if (mode.electricInput) {
-      if (mode.electricInput.test(getLine(cm.doc, range\$\$1.head.line).text.slice(0, range\$\$1.head.ch)))
-        { indented = indentLine(cm, range\$\$1.head.line, "smart"); }
+      if (mode.electricInput.test(getLine(cm.doc, range$$1.head.line).text.slice(0, range$$1.head.ch)))
+        { indented = indentLine(cm, range$$1.head.line, "smart"); }
     }
-    if (indented) { signalLater(cm, "electricInput", cm, range\$\$1.head.line); }
+    if (indented) { signalLater(cm, "electricInput", cm, range$$1.head.line); }
   }
 }
 
@@ -8177,13 +8177,13 @@ var addEditorMethods = function(CodeMirror) {
     getOption: function(option) {return this.options[option]},
     getDoc: function() {return this.doc},
 
-    addKeyMap: function(map\$\$1, bottom) {
-      this.state.keyMaps[bottom ? "push" : "unshift"](getKeyMap(map\$\$1));
+    addKeyMap: function(map$$1, bottom) {
+      this.state.keyMaps[bottom ? "push" : "unshift"](getKeyMap(map$$1));
     },
-    removeKeyMap: function(map\$\$1) {
+    removeKeyMap: function(map$$1) {
       var maps = this.state.keyMaps;
       for (var i = 0; i < maps.length; ++i)
-        { if (maps[i] == map\$\$1 || maps[i].name == map\$\$1) {
+        { if (maps[i] == map$$1 || maps[i].name == map$$1) {
           maps.splice(i, 1);
           return true
         } }
@@ -8200,15 +8200,15 @@ var addEditorMethods = function(CodeMirror) {
       regChange(this);
     }),
     removeOverlay: methodOp(function(spec) {
-      var this\$1 = this;
+      var this$1 = this;
 
       var overlays = this.state.overlays;
       for (var i = 0; i < overlays.length; ++i) {
         var cur = overlays[i].modeSpec;
         if (cur == spec || typeof spec == "string" && cur.name == spec) {
           overlays.splice(i, 1);
-          this\$1.state.modeGen++;
-          regChange(this\$1);
+          this$1.state.modeGen++;
+          regChange(this$1);
           return
         }
       }
@@ -8222,24 +8222,24 @@ var addEditorMethods = function(CodeMirror) {
       if (isLine(this.doc, n)) { indentLine(this, n, dir, aggressive); }
     }),
     indentSelection: methodOp(function(how) {
-      var this\$1 = this;
+      var this$1 = this;
 
       var ranges = this.doc.sel.ranges, end = -1;
       for (var i = 0; i < ranges.length; i++) {
-        var range\$\$1 = ranges[i];
-        if (!range\$\$1.empty()) {
-          var from = range\$\$1.from(), to = range\$\$1.to();
+        var range$$1 = ranges[i];
+        if (!range$$1.empty()) {
+          var from = range$$1.from(), to = range$$1.to();
           var start = Math.max(end, from.line);
-          end = Math.min(this\$1.lastLine(), to.line - (to.ch ? 0 : 1)) + 1;
+          end = Math.min(this$1.lastLine(), to.line - (to.ch ? 0 : 1)) + 1;
           for (var j = start; j < end; ++j)
-            { indentLine(this\$1, j, how); }
-          var newRanges = this\$1.doc.sel.ranges;
+            { indentLine(this$1, j, how); }
+          var newRanges = this$1.doc.sel.ranges;
           if (from.ch == 0 && ranges.length == newRanges.length && newRanges[i].from().ch > 0)
-            { replaceOneSelection(this\$1.doc, i, new Range(from, newRanges[i].to()), sel_dontScroll); }
-        } else if (range\$\$1.head.line > end) {
-          indentLine(this\$1, range\$\$1.head.line, how, true);
-          end = range\$\$1.head.line;
-          if (i == this\$1.doc.sel.primIndex) { ensureCursorVisible(this\$1); }
+            { replaceOneSelection(this$1.doc, i, new Range(from, newRanges[i].to()), sel_dontScroll); }
+        } else if (range$$1.head.line > end) {
+          indentLine(this$1, range$$1.head.line, how, true);
+          end = range$$1.head.line;
+          if (i == this$1.doc.sel.primIndex) { ensureCursorVisible(this$1); }
         }
       }
     }),
@@ -8281,7 +8281,7 @@ var addEditorMethods = function(CodeMirror) {
     },
 
     getHelpers: function(pos, type) {
-      var this\$1 = this;
+      var this$1 = this;
 
       var found = [];
       if (!helpers.hasOwnProperty(type)) { return found }
@@ -8298,9 +8298,9 @@ var addEditorMethods = function(CodeMirror) {
       } else if (help[mode.name]) {
         found.push(help[mode.name]);
       }
-      for (var i\$1 = 0; i\$1 < help._global.length; i\$1++) {
-        var cur = help._global[i\$1];
-        if (cur.pred(mode, this\$1) && indexOf(found, cur.val) == -1)
+      for (var i$1 = 0; i$1 < help._global.length; i$1++) {
+        var cur = help._global[i$1];
+        if (cur.pred(mode, this$1) && indexOf(found, cur.val) == -1)
           { found.push(cur.val); }
       }
       return found
@@ -8313,10 +8313,10 @@ var addEditorMethods = function(CodeMirror) {
     },
 
     cursorCoords: function(start, mode) {
-      var pos, range\$\$1 = this.doc.sel.primary();
-      if (start == null) { pos = range\$\$1.head; }
+      var pos, range$$1 = this.doc.sel.primary();
+      if (start == null) { pos = range$$1.head; }
       else if (typeof start == "object") { pos = clipPos(this.doc, start); }
-      else { pos = start ? range\$\$1.from() : range\$\$1.to(); }
+      else { pos = start ? range$$1.from() : range$$1.to(); }
       return cursorCoords(this, pos, mode || "page")
     },
 
@@ -8400,26 +8400,26 @@ var addEditorMethods = function(CodeMirror) {
     triggerElectric: methodOp(function(text) { triggerElectric(this, text); }),
 
     findPosH: function(from, amount, unit, visually) {
-      var this\$1 = this;
+      var this$1 = this;
 
       var dir = 1;
       if (amount < 0) { dir = -1; amount = -amount; }
       var cur = clipPos(this.doc, from);
       for (var i = 0; i < amount; ++i) {
-        cur = findPosH(this\$1.doc, cur, dir, unit, visually);
+        cur = findPosH(this$1.doc, cur, dir, unit, visually);
         if (cur.hitSide) { break }
       }
       return cur
     },
 
     moveH: methodOp(function(dir, unit) {
-      var this\$1 = this;
+      var this$1 = this;
 
-      this.extendSelectionsBy(function (range\$\$1) {
-        if (this\$1.display.shift || this\$1.doc.extend || range\$\$1.empty())
-          { return findPosH(this\$1.doc, range\$\$1.head, dir, unit, this\$1.options.rtlMoveVisually) }
+      this.extendSelectionsBy(function (range$$1) {
+        if (this$1.display.shift || this$1.doc.extend || range$$1.empty())
+          { return findPosH(this$1.doc, range$$1.head, dir, unit, this$1.options.rtlMoveVisually) }
         else
-          { return dir < 0 ? range\$\$1.from() : range\$\$1.to() }
+          { return dir < 0 ? range$$1.from() : range$$1.to() }
       }, sel_move);
     }),
 
@@ -8428,42 +8428,42 @@ var addEditorMethods = function(CodeMirror) {
       if (sel.somethingSelected())
         { doc.replaceSelection("", null, "+delete"); }
       else
-        { deleteNearSelection(this, function (range\$\$1) {
-          var other = findPosH(doc, range\$\$1.head, dir, unit, false);
-          return dir < 0 ? {from: other, to: range\$\$1.head} : {from: range\$\$1.head, to: other}
+        { deleteNearSelection(this, function (range$$1) {
+          var other = findPosH(doc, range$$1.head, dir, unit, false);
+          return dir < 0 ? {from: other, to: range$$1.head} : {from: range$$1.head, to: other}
         }); }
     }),
 
     findPosV: function(from, amount, unit, goalColumn) {
-      var this\$1 = this;
+      var this$1 = this;
 
       var dir = 1, x = goalColumn;
       if (amount < 0) { dir = -1; amount = -amount; }
       var cur = clipPos(this.doc, from);
       for (var i = 0; i < amount; ++i) {
-        var coords = cursorCoords(this\$1, cur, "div");
+        var coords = cursorCoords(this$1, cur, "div");
         if (x == null) { x = coords.left; }
         else { coords.left = x; }
-        cur = findPosV(this\$1, coords, dir, unit);
+        cur = findPosV(this$1, coords, dir, unit);
         if (cur.hitSide) { break }
       }
       return cur
     },
 
     moveV: methodOp(function(dir, unit) {
-      var this\$1 = this;
+      var this$1 = this;
 
       var doc = this.doc, goals = [];
       var collapse = !this.display.shift && !doc.extend && doc.sel.somethingSelected();
-      doc.extendSelectionsBy(function (range\$\$1) {
+      doc.extendSelectionsBy(function (range$$1) {
         if (collapse)
-          { return dir < 0 ? range\$\$1.from() : range\$\$1.to() }
-        var headPos = cursorCoords(this\$1, range\$\$1.head, "div");
-        if (range\$\$1.goalColumn != null) { headPos.left = range\$\$1.goalColumn; }
+          { return dir < 0 ? range$$1.from() : range$$1.to() }
+        var headPos = cursorCoords(this$1, range$$1.head, "div");
+        if (range$$1.goalColumn != null) { headPos.left = range$$1.goalColumn; }
         goals.push(headPos.left);
-        var pos = findPosV(this\$1, headPos, dir, unit);
-        if (unit == "page" && range\$\$1 == doc.sel.primary())
-          { addToScrollTop(this\$1, charCoords(this\$1, pos, "div").top - headPos.top); }
+        var pos = findPosV(this$1, headPos, dir, unit);
+        if (unit == "page" && range$$1 == doc.sel.primary())
+          { addToScrollTop(this$1, charCoords(this$1, pos, "div").top - headPos.top); }
         return pos
       }, sel_move);
       if (goals.length) { for (var i = 0; i < doc.sel.ranges.length; i++)
@@ -8509,37 +8509,37 @@ var addEditorMethods = function(CodeMirror) {
               clientHeight: displayHeight(this), clientWidth: displayWidth(this)}
     },
 
-    scrollIntoView: methodOp(function(range\$\$1, margin) {
-      if (range\$\$1 == null) {
-        range\$\$1 = {from: this.doc.sel.primary().head, to: null};
+    scrollIntoView: methodOp(function(range$$1, margin) {
+      if (range$$1 == null) {
+        range$$1 = {from: this.doc.sel.primary().head, to: null};
         if (margin == null) { margin = this.options.cursorScrollMargin; }
-      } else if (typeof range\$\$1 == "number") {
-        range\$\$1 = {from: Pos(range\$\$1, 0), to: null};
-      } else if (range\$\$1.from == null) {
-        range\$\$1 = {from: range\$\$1, to: null};
+      } else if (typeof range$$1 == "number") {
+        range$$1 = {from: Pos(range$$1, 0), to: null};
+      } else if (range$$1.from == null) {
+        range$$1 = {from: range$$1, to: null};
       }
-      if (!range\$\$1.to) { range\$\$1.to = range\$\$1.from; }
-      range\$\$1.margin = margin || 0;
+      if (!range$$1.to) { range$$1.to = range$$1.from; }
+      range$$1.margin = margin || 0;
 
-      if (range\$\$1.from.line != null) {
-        scrollToRange(this, range\$\$1);
+      if (range$$1.from.line != null) {
+        scrollToRange(this, range$$1);
       } else {
-        scrollToCoordsRange(this, range\$\$1.from, range\$\$1.to, range\$\$1.margin);
+        scrollToCoordsRange(this, range$$1.from, range$$1.to, range$$1.margin);
       }
     }),
 
     setSize: methodOp(function(width, height) {
-      var this\$1 = this;
+      var this$1 = this;
 
-      var interpret = function (val) { return typeof val == "number" || /^\d+\$/.test(String(val)) ? val + "px" : val; };
+      var interpret = function (val) { return typeof val == "number" || /^\d+$/.test(String(val)) ? val + "px" : val; };
       if (width != null) { this.display.wrapper.style.width = interpret(width); }
       if (height != null) { this.display.wrapper.style.height = interpret(height); }
       if (this.options.lineWrapping) { clearLineMeasurementCache(this); }
-      var lineNo\$\$1 = this.display.viewFrom;
-      this.doc.iter(lineNo\$\$1, this.display.viewTo, function (line) {
+      var lineNo$$1 = this.display.viewFrom;
+      this.doc.iter(lineNo$$1, this.display.viewTo, function (line) {
         if (line.widgets) { for (var i = 0; i < line.widgets.length; i++)
-          { if (line.widgets[i].noHScroll) { regLineChange(this\$1, lineNo\$\$1, "widget"); break } } }
-        ++lineNo\$\$1;
+          { if (line.widgets[i].noHScroll) { regLineChange(this$1, lineNo$$1, "widget"); break } } }
+        ++lineNo$$1;
       });
       this.curOp.forceUpdate = true;
       signal(this, "refresh", this);
@@ -8696,7 +8696,7 @@ var ContentEditableInput = function(cm) {
 };
 
 ContentEditableInput.prototype.init = function (display) {
-    var this\$1 = this;
+    var this$1 = this;
 
   var input = this, cm = input.cm;
   var div = input.div = display.lineDiv;
@@ -8705,26 +8705,26 @@ ContentEditableInput.prototype.init = function (display) {
   on(div, "paste", function (e) {
     if (signalDOMEvent(cm, e) || handlePaste(e, cm)) { return }
     // IE doesn't fire input events, so we schedule a read for the pasted content in this way
-    if (ie_version <= 11) { setTimeout(operation(cm, function () { return this\$1.updateFromDOM(); }), 20); }
+    if (ie_version <= 11) { setTimeout(operation(cm, function () { return this$1.updateFromDOM(); }), 20); }
   });
 
   on(div, "compositionstart", function (e) {
-    this\$1.composing = {data: e.data, done: false};
+    this$1.composing = {data: e.data, done: false};
   });
   on(div, "compositionupdate", function (e) {
-    if (!this\$1.composing) { this\$1.composing = {data: e.data, done: false}; }
+    if (!this$1.composing) { this$1.composing = {data: e.data, done: false}; }
   });
   on(div, "compositionend", function (e) {
-    if (this\$1.composing) {
-      if (e.data != this\$1.composing.data) { this\$1.readFromDOMSoon(); }
-      this\$1.composing.done = true;
+    if (this$1.composing) {
+      if (e.data != this$1.composing.data) { this$1.readFromDOMSoon(); }
+      this$1.composing.done = true;
     }
   });
 
   on(div, "touchstart", function () { return input.forceCompositionEnd(); });
 
   on(div, "input", function () {
-    if (!this\$1.composing) { this\$1.readFromDOMSoon(); }
+    if (!this$1.composing) { this$1.readFromDOMSoon(); }
   });
 
   function onCopyCut(e) {
@@ -8808,8 +8808,8 @@ ContentEditableInput.prototype.showPrimarySelection = function () {
   var end = to.line < cm.display.viewTo && posToDOM(cm, to);
   if (!end) {
     var measure = view[view.length - 1].measure;
-    var map\$\$1 = measure.maps ? measure.maps[measure.maps.length - 1] : measure.map;
-    end = {node: map\$\$1[map\$\$1.length - 1], offset: map\$\$1[map\$\$1.length - 2] - map\$\$1[map\$\$1.length - 3]};
+    var map$$1 = measure.maps ? measure.maps[measure.maps.length - 1] : measure.map;
+    end = {node: map$$1[map$$1.length - 1], offset: map$$1[map$$1.length - 2] - map$$1[map$$1.length - 3]};
   }
 
   if (!start || !end) {
@@ -8838,13 +8838,13 @@ ContentEditableInput.prototype.showPrimarySelection = function () {
 };
 
 ContentEditableInput.prototype.startGracePeriod = function () {
-    var this\$1 = this;
+    var this$1 = this;
 
   clearTimeout(this.gracePeriod);
   this.gracePeriod = setTimeout(function () {
-    this\$1.gracePeriod = false;
-    if (this\$1.selectionChanged())
-      { this\$1.cm.operation(function () { return this\$1.cm.curOp.selectionChanged = true; }); }
+    this$1.gracePeriod = false;
+    if (this$1.selectionChanged())
+      { this$1.cm.operation(function () { return this$1.cm.curOp.selectionChanged = true; }); }
   }, 20);
 };
 
@@ -8986,7 +8986,7 @@ ContentEditableInput.prototype.pollContent = function () {
   }
 
   newText[newText.length - 1] = newBot.slice(0, newBot.length - cutEnd).replace(/^\u200b+/, "");
-  newText[0] = newText[0].slice(cutFront).replace(/\u200b+\$/, "");
+  newText[0] = newText[0].slice(cutFront).replace(/\u200b+$/, "");
 
   var chFrom = Pos(fromLine, cutFront);
   var chTo = Pos(toLine, oldText.length ? lst(oldText).length - cutEnd : 0);
@@ -9011,24 +9011,24 @@ ContentEditableInput.prototype.forceCompositionEnd = function () {
   this.div.focus();
 };
 ContentEditableInput.prototype.readFromDOMSoon = function () {
-    var this\$1 = this;
+    var this$1 = this;
 
   if (this.readDOMTimeout != null) { return }
   this.readDOMTimeout = setTimeout(function () {
-    this\$1.readDOMTimeout = null;
-    if (this\$1.composing) {
-      if (this\$1.composing.done) { this\$1.composing = null; }
+    this$1.readDOMTimeout = null;
+    if (this$1.composing) {
+      if (this$1.composing.done) { this$1.composing = null; }
       else { return }
     }
-    this\$1.updateFromDOM();
+    this$1.updateFromDOM();
   }, 80);
 };
 
 ContentEditableInput.prototype.updateFromDOM = function () {
-    var this\$1 = this;
+    var this$1 = this;
 
   if (this.cm.isReadOnly() || !this.pollContent())
-    { runInOp(this.cm, function () { return regChange(this\$1.cm); }); }
+    { runInOp(this.cm, function () { return regChange(this$1.cm); }); }
 };
 
 ContentEditableInput.prototype.setUneditable = function (node) {
@@ -9098,22 +9098,22 @@ function domTextBetween(cm, from, to, fromLine, toLine) {
         addText(cmText);
         return
       }
-      var markerID = node.getAttribute("cm-marker"), range\$\$1;
+      var markerID = node.getAttribute("cm-marker"), range$$1;
       if (markerID) {
         var found = cm.findMarks(Pos(fromLine, 0), Pos(toLine + 1, 0), recognizeMarker(+markerID));
-        if (found.length && (range\$\$1 = found[0].find(0)))
-          { addText(getBetween(cm.doc, range\$\$1.from, range\$\$1.to).join(lineSep)); }
+        if (found.length && (range$$1 = found[0].find(0)))
+          { addText(getBetween(cm.doc, range$$1.from, range$$1.to).join(lineSep)); }
         return
       }
       if (node.getAttribute("contenteditable") == "false") { return }
-      var isBlock = /^(pre|div|p|li|table|br)\$/i.test(node.nodeName);
-      if (!/^br\$/i.test(node.nodeName) && node.textContent.length == 0) { return }
+      var isBlock = /^(pre|div|p|li|table|br)$/i.test(node.nodeName);
+      if (!/^br$/i.test(node.nodeName) && node.textContent.length == 0) { return }
 
       if (isBlock) { close(); }
       for (var i = 0; i < node.childNodes.length; i++)
         { walk(node.childNodes[i]); }
 
-      if (/^(pre|p)\$/i.test(node.nodeName)) { extraLinebreak = true; }
+      if (/^(pre|p)$/i.test(node.nodeName)) { extraLinebreak = true; }
       if (isBlock) { closing = true; }
     } else if (node.nodeType == 3) {
       addText(node.nodeValue.replace(/\u200b/g, "").replace(/\u00a0/g, " "));
@@ -9170,13 +9170,13 @@ function locateNodeInLineView(lineView, node, offset) {
 
   function find(textNode, topNode, offset) {
     for (var i = -1; i < (maps ? maps.length : 0); i++) {
-      var map\$\$1 = i < 0 ? measure.map : maps[i];
-      for (var j = 0; j < map\$\$1.length; j += 3) {
-        var curNode = map\$\$1[j + 2];
+      var map$$1 = i < 0 ? measure.map : maps[i];
+      for (var j = 0; j < map$$1.length; j += 3) {
+        var curNode = map$$1[j + 2];
         if (curNode == textNode || curNode == topNode) {
           var line = lineNo(i < 0 ? lineView.line : lineView.rest[i]);
-          var ch = map\$\$1[j] + offset;
-          if (offset < 0 || curNode != textNode) { ch = map\$\$1[j + (offset ? 1 : 0)]; }
+          var ch = map$$1[j] + offset;
+          if (offset < 0 || curNode != textNode) { ch = map$$1[j + (offset ? 1 : 0)]; }
           return Pos(line, ch)
         }
       }
@@ -9193,12 +9193,12 @@ function locateNodeInLineView(lineView, node, offset) {
     else
       { dist += after.textContent.length; }
   }
-  for (var before = topNode.previousSibling, dist\$1 = offset; before; before = before.previousSibling) {
+  for (var before = topNode.previousSibling, dist$1 = offset; before; before = before.previousSibling) {
     found = find(before, before.firstChild, -1);
     if (found)
-      { return badPos(Pos(found.line, found.ch + dist\$1), bad) }
+      { return badPos(Pos(found.line, found.ch + dist$1), bad) }
     else
-      { dist\$1 += before.textContent.length; }
+      { dist$1 += before.textContent.length; }
   }
 }
 
@@ -9221,7 +9221,7 @@ var TextareaInput = function(cm) {
 };
 
 TextareaInput.prototype.init = function (display) {
-    var this\$1 = this;
+    var this$1 = this;
 
   var input = this, cm = this.cm;
   this.createField(display);
@@ -9233,7 +9233,7 @@ TextareaInput.prototype.init = function (display) {
   if (ios) { te.style.width = "0px"; }
 
   on(te, "input", function () {
-    if (ie && ie_version >= 9 && this\$1.hasSelection) { this\$1.hasSelection = null; }
+    if (ie && ie_version >= 9 && this$1.hasSelection) { this$1.hasSelection = null; }
     input.poll();
   });
 
@@ -9369,12 +9369,12 @@ TextareaInput.prototype.receivedFocus = function () { this.slowPoll(); };
 // Poll for input changes, using the normal rate of polling. This
 // runs as long as the editor is focused.
 TextareaInput.prototype.slowPoll = function () {
-    var this\$1 = this;
+    var this$1 = this;
 
   if (this.pollingFast) { return }
   this.polling.set(this.cm.options.pollInterval, function () {
-    this\$1.poll();
-    if (this\$1.cm.state.focused) { this\$1.slowPoll(); }
+    this$1.poll();
+    if (this$1.cm.state.focused) { this$1.slowPoll(); }
   });
 };
 
@@ -9399,7 +9399,7 @@ TextareaInput.prototype.fastPoll = function () {
 // seen text (can be empty), which is stored in prevInput (we must
 // not reset the textarea when typing, because that breaks IME).
 TextareaInput.prototype.poll = function () {
-    var this\$1 = this;
+    var this$1 = this;
 
   var cm = this.cm, input = this.textarea, prevInput = this.prevInput;
   // Since this is called a *lot*, try to bail out as cheaply as
@@ -9434,15 +9434,15 @@ TextareaInput.prototype.poll = function () {
 
   runInOp(cm, function () {
     applyTextInput(cm, text.slice(same), prevInput.length - same,
-                   null, this\$1.composing ? "*compose" : null);
+                   null, this$1.composing ? "*compose" : null);
 
     // Don't leave long text in the textarea, since it makes further polling slow
-    if (text.length > 1000 || text.indexOf("\n") > -1) { input.value = this\$1.prevInput = ""; }
-    else { this\$1.prevInput = text; }
+    if (text.length > 1000 || text.indexOf("\n") > -1) { input.value = this$1.prevInput = ""; }
+    else { this$1.prevInput = text; }
 
-    if (this\$1.composing) {
-      this\$1.composing.range.clear();
-      this\$1.composing.range = cm.markText(this\$1.composing.start, cm.getCursor("to"),
+    if (this$1.composing) {
+      this$1.composing.range.clear();
+      this$1.composing.range = cm.markText(this$1.composing.start, cm.getCursor("to"),
                                          {className: "CodeMirror-composing"});
     }
   });
@@ -9598,7 +9598,7 @@ function fromTextArea(textarea, options) {
   };
 
   textarea.style.display = "none";
-  var cm = CodeMirror\$1(function (node) { return textarea.parentNode.insertBefore(node, textarea.nextSibling); },
+  var cm = CodeMirror$1(function (node) { return textarea.parentNode.insertBefore(node, textarea.nextSibling); },
     options);
   return cm
 }
@@ -9649,14 +9649,14 @@ function addLegacyProps(CodeMirror) {
 
 // EDITOR CONSTRUCTOR
 
-defineOptions(CodeMirror\$1);
+defineOptions(CodeMirror$1);
 
-addEditorMethods(CodeMirror\$1);
+addEditorMethods(CodeMirror$1);
 
 // Set up methods on CodeMirror's prototype to redirect to the editor's document.
 var dontDelegate = "iter insert remove copy getEditor constructor".split(" ");
 for (var prop in Doc.prototype) { if (Doc.prototype.hasOwnProperty(prop) && indexOf(dontDelegate, prop) < 0)
-  { CodeMirror\$1.prototype[prop] = (function(method) {
+  { CodeMirror$1.prototype[prop] = (function(method) {
     return function() {return method.apply(this.doc, arguments)}
   })(Doc.prototype[prop]); } }
 
@@ -9664,39 +9664,39 @@ eventMixin(Doc);
 
 // INPUT HANDLING
 
-CodeMirror\$1.inputStyles = {"textarea": TextareaInput, "contenteditable": ContentEditableInput};
+CodeMirror$1.inputStyles = {"textarea": TextareaInput, "contenteditable": ContentEditableInput};
 
 // MODE DEFINITION AND QUERYING
 
 // Extra arguments are stored as the mode's dependencies, which is
 // used by (legacy) mechanisms like loadmode.js to automatically
 // load a mode. (Preferred mechanism is the require/define calls.)
-CodeMirror\$1.defineMode = function(name/*, mode, …*/) {
-  if (!CodeMirror\$1.defaults.mode && name != "null") { CodeMirror\$1.defaults.mode = name; }
+CodeMirror$1.defineMode = function(name/*, mode, …*/) {
+  if (!CodeMirror$1.defaults.mode && name != "null") { CodeMirror$1.defaults.mode = name; }
   defineMode.apply(this, arguments);
 };
 
-CodeMirror\$1.defineMIME = defineMIME;
+CodeMirror$1.defineMIME = defineMIME;
 
 // Minimal default mode.
-CodeMirror\$1.defineMode("null", function () { return ({token: function (stream) { return stream.skipToEnd(); }}); });
-CodeMirror\$1.defineMIME("text/plain", "null");
+CodeMirror$1.defineMode("null", function () { return ({token: function (stream) { return stream.skipToEnd(); }}); });
+CodeMirror$1.defineMIME("text/plain", "null");
 
 // EXTENSIONS
 
-CodeMirror\$1.defineExtension = function (name, func) {
-  CodeMirror\$1.prototype[name] = func;
+CodeMirror$1.defineExtension = function (name, func) {
+  CodeMirror$1.prototype[name] = func;
 };
-CodeMirror\$1.defineDocExtension = function (name, func) {
+CodeMirror$1.defineDocExtension = function (name, func) {
   Doc.prototype[name] = func;
 };
 
-CodeMirror\$1.fromTextArea = fromTextArea;
+CodeMirror$1.fromTextArea = fromTextArea;
 
-addLegacyProps(CodeMirror\$1);
+addLegacyProps(CodeMirror$1);
 
-CodeMirror\$1.version = "5.40.0";
+CodeMirror$1.version = "5.40.0";
 
-return CodeMirror\$1;
+return CodeMirror$1;
 
 })));
