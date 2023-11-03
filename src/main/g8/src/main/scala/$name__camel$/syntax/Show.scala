@@ -1,7 +1,7 @@
-package \$name;format="camel"\$.syntax
+package $name;format="camel"$.syntax
 
-import \$name;format="camel"\$.syntax.Program.*
-import \$name;format="camel"\$.syntax.Program.Term.*
+import $name;format="camel"$.syntax.Program.*
+import $name;format="camel"$.syntax.Program.Term.*
 
 /**
  * List of functions to produce textual representations of commands

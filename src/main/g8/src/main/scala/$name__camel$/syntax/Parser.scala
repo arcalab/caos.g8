@@ -27,12 +27,12 @@ object Parser :
     val loc = LocationMap(str)
     val pos = loc.toLineCol(err.failedAtOffset) match
       case Some((x,y)) =>
-        s"""at ($x,$y):
-           |"${loc.getLine(x).getOrElse("-")}"
-           |${("-" * (y+1))+"^\n"}""".stripMargin
+        s"""at (\$x,\$y):
+           |"\${loc.getLine(x).getOrElse("-")}"
+           |\${("-" * (y+1))+"^\n"}""".stripMargin
       case _ => ""
-    s"${pos}expected: ${err.expected.toList.mkString(", ")}\noffsets: ${
-      err.failedAtOffset};${err.offsets.toList.mkString(",")}"
+    s"\${pos}expected: \${err.expected.toList.mkString(", ")}\noffsets: \${
+      err.failedAtOffset};\${err.offsets.toList.mkString(",")}"
 
   // Simple parsers for spaces and comments
   /** Parser for a sequence of spaces or comments */
