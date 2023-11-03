@@ -4,14 +4,14 @@ lazy val caos = project.in(file("lib/caos"))
   .enablePlugins(ScalaJSPlugin)
   .settings(scalaVersion := scala3Version)
 
-lazy val myLanguage = project.in(file("."))
+lazy val $name;format="camel"$ = project.in(file("."))
    .enablePlugins(ScalaJSPlugin)
   .settings(
-    name := "My Language",
+    name := "$name$",
     version := "0.1.0",
     scalaVersion := scala3Version,
     scalaJSUseMainModuleInitializer := true,
-    Compile / mainClass := Some("myLanguage.frontend.Main"),
+    Compile / mainClass := Some("$name;format="camel"$.frontend.Main"),
     Compile / fastLinkJS / scalaJSLinkerOutputDirectory := baseDirectory.value / "lib" / "caos"/ "tool" / "js" / "gen",
     libraryDependencies ++= Seq(
       "org.typelevel" %%% "cats-parse" % "0.3.4",  // parser combinators
